@@ -4,18 +4,18 @@
     <item
         android:id="@+id/dashBoardFragment"
         android:icon="@drawable/home_menu_selector"
-        android:title="Home" />
+        android:title="@string/home" />
     <item
         android:id="@+id/movieListFragment"
         android:icon="@drawable/movie_menu_selector"
-        android:title="Movie" />
+        android:title="@string/movie" />
     <item
         android:id="@+id/bookingListFragment"
         android:icon="@drawable/booking_menu_selector"
-        android:title="Booking" />
+        android:title="@string/booking" />
     <item
         android:id="@+id/profilefragment"
         android:icon="@drawable/profile_menu_selector"
-        android:title="Profile" />
+        android:title="@string/profile" />
 
 </menu>

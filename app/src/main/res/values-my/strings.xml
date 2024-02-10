@@ -25,4 +25,8 @@
     <string name="submit">Submit</string>
     <string name="check_in_your_mail">Check in Your Mail !</string>
     <string name="just_mailed">We just emailed emailed you with the instructions\nto reset your password.</string>
+    <string name="home">Home</string>
+    <string name="movie">Movie</string>
+    <string name="booking">Booking</string>
+    <string name="profile">Profile</string>
 </resources>
