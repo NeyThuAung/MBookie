@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">MBookie</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_desc">Log in to your account to book\nyour favourite movie.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="foret_password">Forget Password?</string>
+    <string name="login">Login</string>
+    <string name="new_user">New User?</string>
+    <string name="register_here">Register Here</string>
+    <string name="register">Register</string>
+    <string name="new_account">New Account</string>
+    <string name="open_an_account_to_explore_more_nmovies_and_book_for_ticket">Open an account to explore more\nmovies and book for ticket!</string>
+    <string name="example_gmail_com">example@gmail.com</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="by_continuing_you_have_read_and_agreed_to_mbookie_s">By continuing, you have read and agreed to MBookie’s</string>
+    <string name="terms_policy">Terms &amp; Policy.</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login_here">Login Here</string>
+    <string name="forgot">Forgot</string>
+    <string name="forgot_password_desc">Enter your email below to reset your password\nand we will send you a reset link.</string>
+    <string name="submit">Submit</string>
+    <string name="check_in_your_mail">Check in Your Mail !</string>
+    <string name="just_mailed">We just emailed emailed you with the instructions\nto reset your password.</string>
+</resources>

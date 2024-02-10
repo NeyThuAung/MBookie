@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/dashBoardFragment"
+        android:icon="@drawable/home_menu_selector"
+        android:title="Home" />
+    <item
+        android:id="@+id/movieListFragment"
+        android:icon="@drawable/movie_menu_selector"
+        android:title="Movie" />
+    <item
+        android:id="@+id/bookingListFragment"
+        android:icon="@drawable/booking_menu_selector"
+        android:title="Booking" />
+    <item
+        android:id="@+id/profilefragment"
+        android:icon="@drawable/profile_menu_selector"
+        android:title="Profile" />
+
+</menu>
