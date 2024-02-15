@@ -19,11 +19,20 @@
         android:id="@+id/movieListFragment"
         android:name="com.example.mbookie.admin.ui.fragment.MovieListFragment"
         android:label="fragment_movie_list"
-        tools:layout="@layout/fragment_movie_list" />
+        tools:layout="@layout/fragment_movie_list" >
+        <action
+            android:id="@+id/action_movieListFragment_to_addMovieFragment"
+            app:destination="@id/addMovieFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.mbookie.admin.ui.fragment.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/addMovieFragment"
+        android:name="com.example.mbookie.admin.ui.fragment.AddMovieFragment"
+        android:label="fragment_add_movie"
+        tools:layout="@layout/fragment_add_movie" />
 
 </navigation>

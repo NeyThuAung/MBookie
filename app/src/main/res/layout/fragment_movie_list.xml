@@ -7,6 +7,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".admin.ui.fragment.DashBoardFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clToolBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize">
+
+        <TextView
+            android:id="@+id/tvMovieListTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="16dp"
+            android:text="Movie List"
+            android:textSize="18sp"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/icMovieListSearch"
+            app:layout_constraintTop_toTopOf="@id/tvMovieListTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvMovieListTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_search"
+            android:paddingHorizontal="10dp"
+            android:layout_marginEnd="9dp"
+            android:paddingVertical="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/tvSignOut"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,5 +56,21 @@
         android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:visibility="visible"
+        android:id="@+id/floatingActionAddMovie"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="35dp"
+        android:src="@drawable/baseline_add_24"
+        android:backgroundTint="@color/green"
+        app:elevation="0dp"
+        app:fabCustomSize="50dp"
+        android:layout_width="50dp"
+        app:tint="@color/white"
+        android:layout_height="50dp"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

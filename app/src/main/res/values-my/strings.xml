@@ -29,4 +29,8 @@
     <string name="movie">Movie</string>
     <string name="booking">Booking</string>
     <string name="profile">Profile</string>
+    <string name="add_movie">Add Movie</string>
+    <string name="next">Next</string>
+    <string name="upload_movie_ncover">Upload Movie\nCover</string>
+    <string name="movie_title">Movie title</string>
 </resources>
