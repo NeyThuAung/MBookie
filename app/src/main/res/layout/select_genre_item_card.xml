@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    android:paddingBottom="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tvNoMoreResult"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="12sp"
+        android:textColor="@color/text_grey_color"
+        android:fontFamily="@font/pyidaungsu_regular"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="နောက်ထပ်မရှိတော့ပါ။"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <CheckBox
+        android:id="@+id/cbSelectGenre"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="14sp"
+        android:button="@null"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/custom_checkbox"/>
+
+    <TextView
+        android:id="@+id/tvGenre"
+        app:layout_constraintStart_toEndOf="@id/cbSelectGenre"
+        app:layout_constraintTop_toTopOf="@id/cbSelectGenre"
+        app:layout_constraintBottom_toBottomOf="@id/cbSelectGenre"
+        app:layout_constraintEnd_toStartOf="@id/llEditDelete"
+        android:layout_marginStart="15dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        tools:text="Automobile And Evs Automobile "
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/llEditDelete"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cbSelectGenre"
+        app:layout_constraintBottom_toBottomOf="@id/cbSelectGenre"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/app_name"
+            android:padding="7dp" />
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:padding="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="@string/app_name"
+            android:layout_marginEnd="5dp" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

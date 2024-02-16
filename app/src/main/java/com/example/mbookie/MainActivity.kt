@@ -10,17 +10,24 @@ import com.example.mbookie.admin.ui.activity.AdminHomePageActivity
 import com.example.mbookie.customer.ui.activity.CustomerHomePageActivity
 import com.example.mbookie.databinding.ActivityMainBinding
 import com.example.mbookie.login_register.presentation.ui.activity.LoginRegisterActivity
+import com.example.mbookie.util.FireStoreTables
 import com.example.mbookie.util.showToast
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth : FirebaseAuth
 
     private val db = Firebase.firestore
+
+    private var adminOrCustomer = "0" //0 is admin //1 is customer
+    private lateinit var userTable : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +58,17 @@ class MainActivity : AppCompatActivity() {
     // get user role to specify admin or customer
     private fun getUserRole(userId: String) {
 
-        val ref = db.collection("users").document(userId)
+        if (adminOrCustomer == "0"){
+            userTable = FireStoreTables.ADMIN
+        }else{
+            userTable = FireStoreTables.CUSTOMER
+        }
+
+        val ref = db.collection(userTable).document(userId)
 
         ref.get()
             .addOnSuccessListener {
-                this.showToast("Success.")
+                showToast("Success.")
 
                 if (it != null){
                     val isAdmin = it.data?.get("isAdmin").toString()
@@ -63,18 +76,16 @@ class MainActivity : AppCompatActivity() {
                     if (isAdmin.toInt() == 0){
                         val intent = Intent(this, AdminHomePageActivity::class.java)
                         startActivity(intent)
-                        finish()
                     }else{
                         val intent = Intent(this, CustomerHomePageActivity::class.java)
                         startActivity(intent)
-                        finish()
                     }
-
+                    finish()
                 }
 
             }
             .addOnFailureListener {e->
-                this.showToast(e.toString())
+                showToast(e.toString())
             }
     }
 }

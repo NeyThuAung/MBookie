@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.mbookie.databinding.FragmentRegisterBinding
+import com.example.mbookie.util.FireStoreTables
 import com.example.mbookie.util.isValidEmail
 import com.example.mbookie.util.showToast
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 
@@ -20,10 +22,15 @@ class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
 
     private lateinit var auth : FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+
 
     private lateinit var email : String
     private lateinit var userName : String
     private lateinit var password : String
+
+    private var adminOrCustomer = "0" //0 is admin //1 is customer
+    private lateinit var userTable : String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +45,7 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
+        db = Firebase.firestore
 
         onClickEvents()
 
@@ -79,11 +87,15 @@ class RegisterFragment : Fragment() {
     }
 
     //save user info to database table
-    private fun saveUserInfo(userId: String) {
+    private fun saveUserInfo(userId : String) {
 
-        val db = Firebase.firestore
+        if (adminOrCustomer == "0"){
+            userTable = FireStoreTables.ADMIN
+        }else{
+            userTable = FireStoreTables.CUSTOMER
+        }
 
-        val user = hashMapOf(
+        val admin = hashMapOf(
             "userId" to userId,
             "email" to email,
             "userName" to userName,
@@ -92,12 +104,12 @@ class RegisterFragment : Fragment() {
             "birthday" to "",
             "gender" to "",
             "profileUrl" to "",
-            "isAdmin" to "1" //0 is admin // 1 is customer
+            "isAdmin" to adminOrCustomer //0 is admin // 1 is customer
         )
 
-        db.collection("users")
+        db.collection(userTable)
             .document(userId)
-            .set(user)
+            .set(admin)
             .addOnSuccessListener { _ ->
                 requireContext().showToast("Successfully Added.")
 

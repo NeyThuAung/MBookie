@@ -14,7 +14,9 @@ import com.example.mbookie.databinding.ActivityAdminHomePageBinding
 import com.example.mbookie.login_register.presentation.ui.activity.LoginRegisterActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AdminHomePageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdminHomePageBinding

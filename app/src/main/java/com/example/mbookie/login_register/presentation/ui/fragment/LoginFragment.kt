@@ -13,6 +13,7 @@ import com.example.mbookie.R
 import com.example.mbookie.admin.ui.activity.AdminHomePageActivity
 import com.example.mbookie.customer.ui.activity.CustomerHomePageActivity
 import com.example.mbookie.databinding.FragmentLoginBinding
+import com.example.mbookie.util.FireStoreTables
 import com.example.mbookie.util.isValidEmail
 import com.example.mbookie.util.showToast
 import com.google.firebase.Firebase
@@ -26,6 +27,9 @@ class LoginFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
     private val db = Firebase.firestore
+
+    private var adminOrCustomer = "0" //0 is admin //1 is customer
+    private lateinit var userTable : String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,7 +92,13 @@ class LoginFragment : Fragment() {
 
     private fun getUserRole(userId: String) {
 
-        val ref = db.collection("users").document(userId)
+        if (adminOrCustomer == "0"){
+            userTable = FireStoreTables.ADMIN
+        }else{
+            userTable = FireStoreTables.CUSTOMER
+        }
+
+        val ref = db.collection(userTable).document(userId)
 
         ref.get()
             .addOnSuccessListener {

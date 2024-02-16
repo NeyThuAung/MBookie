@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_gravity="center"
+    android:background="@drawable/rounded_border"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/tv_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:text="MBookie"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_regular"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/iv_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_loading"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="3dp"
+        android:adjustViewBounds="true"
+        android:paddingHorizontal="25dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/loading" />
+
+</RelativeLayout>
+

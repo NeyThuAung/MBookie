@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.example.mbookie.R
 import com.example.mbookie.databinding.FragmentMovieListBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MovieListFragment : Fragment() {
 
@@ -25,6 +27,9 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //hide bottom navigation form  Home Page Activity
+        activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.isVisible = true
 
         binding.floatingActionAddMovie.setOnClickListener {
             findNavController().navigate(R.id.action_movieListFragment_to_addMovieFragment)

@@ -11,4 +11,5 @@
     <color name="blue_label">#8C98B7</color>
     <color name="light_grey">#D2D2D2</color>
     <color name="view_line_color">#EEEEEE</color>
+    <color name="button_red">#FF3131</color>
 </resources>

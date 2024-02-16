@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    tools:context=".admin.ui.movie.SelectGenreFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/app_name"
+            android:paddingVertical="3dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSelectGenreTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/select_genre"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:enabled="false"
+            android:paddingVertical="5dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="4dp"
+            android:text="@string/save"
+            android:textColor="@color/text_color_enable_disable_state"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvSelectGenreTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvSelectGenreTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/clActionBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/view_line_color"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/llCbAll"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/clActionBar"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_marginHorizontal="16dp"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <CheckBox-->
+<!--            android:visibility="visible"-->
+<!--            android:id="@+id/cbAllBrand"-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:checked="false"-->
+<!--            android:button="@null"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:background="@drawable/custom_checkbox"/>-->
+
+<!--        <TextView-->
+<!--            android:visibility="gone"-->
+<!--            android:id="@+id/tvAll"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:text="Select All"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="@color/text_black_color"-->
+<!--            android:layout_marginStart="15dp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--    </LinearLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        tools:visibility="visible"
+        android:id="@+id/recSelectGenre"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/clActionBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/select_genre_item_card"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:id="@+id/progressBar"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/green"
+        android:indeterminate="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:visibility="visible"
+        android:id="@+id/floatingActionAddGenre"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="35dp"
+        android:src="@drawable/baseline_add_24"
+        android:backgroundTint="@color/green"
+        app:elevation="0dp"
+        app:fabCustomSize="50dp"
+        android:layout_width="50dp"
+        app:tint="@color/white"
+        android:layout_height="50dp"
+        tools:ignore="ContentDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

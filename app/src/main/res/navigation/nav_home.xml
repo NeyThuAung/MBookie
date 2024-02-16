@@ -33,6 +33,24 @@
         android:id="@+id/addMovieFragment"
         android:name="com.example.mbookie.admin.ui.fragment.AddMovieFragment"
         android:label="fragment_add_movie"
-        tools:layout="@layout/fragment_add_movie" />
+        tools:layout="@layout/fragment_add_movie" >
+        <action
+            android:id="@+id/action_addMovieFragment_to_selectGenreFragment"
+            app:destination="@id/selectGenreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectGenreFragment"
+        android:name="com.example.mbookie.admin.ui.movie.SelectGenreFragment"
+        android:label="fragment_select_genre"
+        tools:layout="@layout/fragment_select_genre" >
+        <action
+            android:id="@+id/action_selectGenreFragment_to_createGenreFragment"
+            app:destination="@id/createGenreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createGenreFragment"
+        android:name="com.example.mbookie.admin.ui.movie.CreateGenreFragment"
+        android:label="fragment_create_genre"
+        tools:layout="@layout/fragment_create_genre" />
 
 </navigation>

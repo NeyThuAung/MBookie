@@ -8,7 +8,9 @@ import com.example.mbookie.R
 import com.example.mbookie.databinding.ActivityCustomerHomePageBinding
 import com.example.mbookie.login_register.presentation.ui.activity.LoginRegisterActivity
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CustomerHomePageActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityCustomerHomePageBinding

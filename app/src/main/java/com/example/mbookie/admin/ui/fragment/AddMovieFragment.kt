@@ -13,16 +13,39 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mbookie.R
 import com.example.mbookie.databinding.FragmentAddMovieBinding
+import com.example.mbookie.viewmodel.MovieViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class AddMovieFragment : Fragment() {
 
     private lateinit var binding : FragmentAddMovieBinding
     private lateinit var movieCoverUri: Uri
+
+    private val movieViewModel : MovieViewModel by activityViewModels()
+
+    override fun onResume() {
+        super.onResume()
+
+        if (movieViewModel.selectedGenreList.isNotEmpty()){
+
+            val selectedGenre = StringBuilder()
+
+            for ((index,genre) in movieViewModel.selectedGenreList.withIndex()){
+                selectedGenre.append(genre.genre)
+                if (index < movieViewModel.selectedGenreList.size - 1) {
+                    selectedGenre.append(", ")
+                }
+
+            }
+            binding.etSelectGenre.setText(selectedGenre)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +58,9 @@ class AddMovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //hide bottom navigation form Vetail Home Page Activity
+        activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.isVisible = false
 
         onClickEvents()
 
@@ -66,6 +92,14 @@ class AddMovieFragment : Fragment() {
 
         binding.cvBackMovie.setOnClickListener {
             pickProfile()
+        }
+
+        binding.tilSelectGenre.setOnClickListener{
+            findNavController().navigate(R.id.action_addMovieFragment_to_selectGenreFragment)
+        }
+
+        binding.etSelectGenre.setOnClickListener{
+            findNavController().navigate(R.id.action_addMovieFragment_to_selectGenreFragment)
         }
     }
 
