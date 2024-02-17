@@ -37,4 +37,12 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="select_movie_category">Select Movie Category</string>
+    <string name="duration">Duration</string>
+    <string name="release_date">Release Date</string>
+    <string name="censorship">Censorship</string>
+    <string name="trailer_link">Trailer Link</string>
+    <string name="description">Description</string>
+    <string name="enter_genre">Enter Genre</string>
+    <string name="create_genre">Create Genre</string>
 </resources>

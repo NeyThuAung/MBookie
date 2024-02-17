@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mbookie.data.model.Genre
-import com.example.mbookie.data.repository.MovieRepository
+import com.example.mbookie.data.model.MovieDetail
 import com.example.mbookie.data.usecase.MovieUseCase
 import com.example.mbookie.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +28,17 @@ class MovieViewModel @Inject constructor(
         _saveGenre.value = UiState.Loading
         movieUseCase.saveGenre(note) {
             _saveGenre.value = it
+        }
+    }
+
+    private val _saveMovie = MutableLiveData<UiState<String>>()
+    val saveMovie : LiveData<UiState<String>>
+        get() = _saveMovie
+
+    fun saveMovie(movie : MovieDetail){
+        _saveMovie.value = UiState.Loading
+        movieUseCase.saveMovie(movie) {
+            _saveMovie.value = it
         }
     }
 

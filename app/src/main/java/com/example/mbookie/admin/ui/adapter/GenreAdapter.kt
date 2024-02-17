@@ -36,6 +36,7 @@ class GenreAdapter(
                     genre.id?.let { it1 -> listener.onUncheckCategoryState(it1) }
                 }
             }
+
             binding.cbSelectGenre.setOnClickListener {
                 if (binding.cbSelectGenre.isChecked){
                     genre.isSelected = true

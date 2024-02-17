@@ -95,6 +95,7 @@ class SelectGenreFragment : Fragment(), GenreAdapter.OnItemClickListener,
                 }
             }
         }
+
     }
 
     private fun retrieveSelectedGenre(genreList: ArrayList<Genre>) {
@@ -108,6 +109,7 @@ class SelectGenreFragment : Fragment(), GenreAdapter.OnItemClickListener,
                 }
             }
         }
+
     }
 
     private fun onClickEvent() {
@@ -144,12 +146,12 @@ class SelectGenreFragment : Fragment(), GenreAdapter.OnItemClickListener,
     }
 
     override fun onCheckCategoryState(checkedGenre: Genre) {
+
         if (!movieViewModel.selectedGenreList.contains(checkedGenre)) {
             movieViewModel.selectedGenreList.add(checkedGenre)
         }
-
         binding.tvSave.checkRequirement()
-        Log.d("GHGHJGJHG", "onCheckUncheck: ${movieViewModel.selectedGenreList.size}")
+
     }
 
     override fun onUncheckCategoryState(genreId: String) {
@@ -163,7 +165,6 @@ class SelectGenreFragment : Fragment(), GenreAdapter.OnItemClickListener,
 
         binding.tvSave.checkRequirement()
 
-        Log.d("GHGHJGJHG", "onCheckUncheck: ${movieViewModel.selectedGenreList.size}")
     }
 
     @SuppressLint("NotifyDataSetChanged")

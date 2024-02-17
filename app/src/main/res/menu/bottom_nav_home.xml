@@ -14,7 +14,7 @@
         android:icon="@drawable/booking_menu_selector"
         android:title="@string/booking" />
     <item
-        android:id="@+id/profilefragment"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/profile_menu_selector"
         android:title="@string/profile" />
 
