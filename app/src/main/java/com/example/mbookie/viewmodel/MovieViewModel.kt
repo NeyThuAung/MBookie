@@ -3,8 +3,10 @@ package com.example.mbookie.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.mbookie.data.model.Cinema
 import com.example.mbookie.data.model.Genre
 import com.example.mbookie.data.model.MovieDetail
+import com.example.mbookie.data.model.Seat
 import com.example.mbookie.data.usecase.MovieUseCase
 import com.example.mbookie.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -72,6 +74,28 @@ class MovieViewModel @Inject constructor(
         _deleteGenre.value = UiState.Loading
         movieUseCase.deleteGenre(genreId) {
             _deleteGenre.value = it
+        }
+    }
+
+    private val _saveCinema = MutableLiveData<UiState<String>>()
+    val saveCinema : LiveData<UiState<String>>
+        get() = _saveCinema
+
+    fun saveCinema(cinema : Cinema){
+        _saveCinema.value = UiState.Loading
+        movieUseCase.saveCinema(cinema) {
+            _saveCinema.value = it
+        }
+    }
+
+    private val _saveSeat = MutableLiveData<UiState<String>>()
+    val saveSeat : LiveData<UiState<String>>
+        get() = _saveSeat
+
+    fun saveSeat(seatList : ArrayList<Seat>){
+        _saveSeat.value = UiState.Loading
+        movieUseCase.saveSeat(seatList) {
+            _saveSeat.value = it
         }
     }
 

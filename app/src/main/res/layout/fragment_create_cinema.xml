@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/inter_medium"
-            android:text="@string/create_genre"
+            android:text="@string/create_cinema"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -68,7 +68,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilGenre"
+        android:id="@+id/tilCinemaName"
         style="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
         android:layout_marginTop="15dp"
         android:clickable="true"
         android:focusable="true"
-        android:hint="@string/enter_genre"
+        android:hint="@string/enter_cinema_name"
         android:textColorHint="@color/light_grey"
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
@@ -90,7 +90,7 @@
         app:layout_constraintTop_toBottomOf="@id/clActionBar">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etGenre"
+            android:id="@+id/etCinema"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
@@ -101,5 +101,79 @@
             tools:ignore="LabelFor" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilTotalSeat"
+        style="@style/MaterialSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/total_number_of_seat"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxStrokeWidth="1.5dp"
+        app:boxStrokeWidthFocused="1.5dp"
+        app:boxStrokeColor="@color/edittext_box_color"
+        app:endIconDrawable="@drawable/drop_down_arrow"
+        app:boxBackgroundColor="@color/black"
+        app:endIconTint="@color/white"
+        app:hintEnabled="true"
+        android:clickable="true"
+        android:focusable="true"
+        app:hintTextColor="@color/edittext_box_color"
+        android:textColorHint="@color/light_grey"
+        app:layout_constraintTop_toBottomOf="@id/tilCinemaName">
+
+        <AutoCompleteTextView
+            android:id="@+id/actvTotalSeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:paddingVertical="17dp"
+            android:paddingStart="15dp"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAddress"
+        style="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="14dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:hint="@string/address"
+        android:textColorHint="@color/light_grey"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxStrokeColor="@color/edittext_box_color"
+        app:boxStrokeWidth="1.5dp"
+        app:boxStrokeWidthFocused="1.5dp"
+        app:hintEnabled="true"
+        app:hintTextColor="@color/edittext_box_color"
+        app:layout_constraintTop_toBottomOf="@id/tilTotalSeat">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"
+            tools:ignore="LabelFor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

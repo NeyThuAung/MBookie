@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
-    tools:context=".admin.ui.movie.CreateGenreFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".admin.ui.movie.AvailableCinemaFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clActionBar"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/inter_medium"
-            android:text="@string/create_genre"
+            android:text="@string/select_genre"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -50,13 +50,12 @@
             android:paddingVertical="5dp"
             android:paddingStart="10dp"
             android:paddingEnd="4dp"
-            android:text="@string/save"
+            android:text="@string/next"
             android:textColor="@color/text_color_enable_disable_state"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/tvSelectGenreTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvSelectGenreTitle" />
-
         <View
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,40 +65,47 @@
             android:layout_height="0.5dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilGenre"
-        style="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvAddCinema"
+        app:layout_constraintTop_toBottomOf="@id/clActionBar"
+        android:layout_marginTop="25dp"
         android:layout_marginHorizontal="14dp"
-        android:layout_marginTop="15dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:hint="@string/enter_genre"
-        android:textColorHint="@color/light_grey"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxStrokeColor="@color/edittext_box_color"
-        app:boxStrokeWidth="1.5dp"
-        app:boxStrokeWidthFocused="1.5dp"
-        app:hintEnabled="true"
-        app:hintTextColor="@color/edittext_box_color"
-        app:layout_constraintTop_toBottomOf="@id/clActionBar">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etGenre"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="5dp"
+        app:strokeColor="@color/view_line_color"
+        app:strokeWidth="0.5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <LinearLayout
+            android:paddingVertical="15dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_regular"
-            android:inputType="text"
-            android:textColor="@color/white"
-            android:textCursorDrawable="@null"
-            android:textSize="14sp"
-            tools:ignore="LabelFor" />
+            tools:ignore="UseCompoundDrawables">
+            
+            <ImageView
+                android:id="@+id/icAdd"
+                android:src="@drawable/ic_add_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/tvAddCinema"
+                android:text="@string/select_cinema"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:fontFamily="@font/inter_medium"
+                android:layout_marginStart="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            
+        </LinearLayout>
+        
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

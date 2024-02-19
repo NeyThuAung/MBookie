@@ -3,8 +3,10 @@ package com.example.mbookie.data.repository
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import com.example.mbookie.data.model.Cinema
 import com.example.mbookie.data.model.Genre
 import com.example.mbookie.data.model.MovieDetail
+import com.example.mbookie.data.model.Seat
 import com.example.mbookie.util.FireStoreTables
 import com.example.mbookie.util.UiState
 import com.google.firebase.firestore.FirebaseFirestore
@@ -106,7 +108,62 @@ class MovieRepositoryImpl(
             .addOnFailureListener {
                 result.invoke(
                     UiState.Failure(
-                        it.localizedMessage
+                        it.localizedMessage as String
+                    )
+                )
+            }
+    }
+
+    override fun saveCinema(cinema: Cinema, result: (UiState<String>) -> Unit) {
+        val document = database.collection(FireStoreTables.CINEMA).document()
+        cinema.cId = document.id
+
+        document
+            .set(cinema)
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success(document.id)
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage as String
+                    )
+                )
+            }
+    }
+
+    override fun saveSeat(seatList: ArrayList<Seat>, result: (UiState<String>) -> Unit) {
+        val seatCollectionRef = database.collection(FireStoreTables.SEAT)
+
+        val batch = database.batch()
+
+        seatList.forEach{seat ->  
+            val seatData = Seat(
+                sId = "",
+                seatNumber = seat.seatNumber,
+                seatAvailableStatus = seat.seatAvailableStatus,
+                cinemaId = seat.cinemaId
+            )
+
+            val docRef = seatCollectionRef.document()
+            seatData.sId = docRef.id
+
+            batch.set(docRef, seatData)
+
+        }
+
+        batch.commit()
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success("Seats has been successfully created.")
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage as String
                     )
                 )
             }

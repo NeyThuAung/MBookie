@@ -40,7 +40,6 @@ class LoadingDialog(var activity: FragmentActivity) {
 
             Glide.with(activity)
                 .load(R.drawable.loading)
-                .placeholder(R.drawable.loading)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageViewTarget)

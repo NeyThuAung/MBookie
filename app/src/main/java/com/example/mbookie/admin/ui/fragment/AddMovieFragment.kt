@@ -277,6 +277,7 @@ class AddMovieFragment : Fragment() {
                     loadingDialog.hideDialog()
                     requireActivity().showToast(state.data)
                     movieViewModel.selectedGenreList.clear()
+                    findNavController().navigate(R.id.action_addMovieFragment_to_selectCinemaFragment)
                 }
             }
         }
