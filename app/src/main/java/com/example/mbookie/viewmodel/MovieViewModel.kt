@@ -7,6 +7,8 @@ import com.example.mbookie.data.model.Cinema
 import com.example.mbookie.data.model.Genre
 import com.example.mbookie.data.model.MovieDetail
 import com.example.mbookie.data.model.Seat
+import com.example.mbookie.data.model.Show
+import com.example.mbookie.data.model.ShowDate
 import com.example.mbookie.data.usecase.MovieUseCase
 import com.example.mbookie.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +23,16 @@ class MovieViewModel @Inject constructor(
     var genreLst = ArrayList<Genre>()
     var genreId : String = ""
     var genreToEdit = Genre()
+
+    var selectedCinema = Cinema()
+    var movieId = ""
+    var editMovieDetail = MovieDetail()
+
+    var showTimeList = arrayListOf<Show>()
+    var manageCinemaList = arrayListOf<Cinema>()
+
+    var cinemaId =""
+    var editCinemaDetail = Cinema()
 
     private val _saveGenre = MutableLiveData<UiState<String>>()
     val saveGenre : LiveData<UiState<String>>
@@ -99,4 +111,110 @@ class MovieViewModel @Inject constructor(
         }
     }
 
+    private val _movieList = MutableLiveData<UiState<List<MovieDetail>>>()
+    val movieList : LiveData<UiState<List<MovieDetail>>>
+        get() = _movieList
+    fun getMovieList(){
+        _movieList.value = UiState.Loading
+        movieUseCase.getMovieList {
+            _movieList.value = it
+        }
+    }
+
+    private val _cinemaList = MutableLiveData<UiState<List<Cinema>>>()
+    val cinemaList : LiveData<UiState<List<Cinema>>>
+        get() = _cinemaList
+    fun getCinemaList(){
+        _cinemaList.value = UiState.Loading
+        movieUseCase.getCinemaList {
+            _cinemaList.value = it
+        }
+    }
+
+    private val _saveShowtime = MutableLiveData<UiState<String>>()
+    val saveShowtime : LiveData<UiState<String>>
+        get() = _saveShowtime
+
+    fun saveShowtime(showDateList : ArrayList<ShowDate>, movieId : String, cinemaId : String){
+        _saveShowtime.value = UiState.Loading
+        movieUseCase.saveShowtime(showDateList,movieId,cinemaId) {
+            _saveShowtime.value = it
+        }
+    }
+
+    private val _showList = MutableLiveData<UiState<List<Show>>>()
+    val showList : LiveData<UiState<List<Show>>>
+        get() = _showList
+    fun getShowList(movieId : String, cinemaId : String){
+        _showList.value = UiState.Loading
+        movieUseCase.getShowList(movieId, cinemaId) {
+            _showList.value = it
+        }
+    }
+
+    private val _deleteShowTime = MutableLiveData<UiState<String>>()
+    val deleteShowtime : LiveData<UiState<String>>
+        get() = _deleteShowTime
+
+    fun deleteShowtime(showId : String){
+        _deleteShowTime.value = UiState.Loading
+        movieUseCase.deleteShowTime(showId) {
+            _deleteShowTime.value = it
+        }
+    }
+
+    private val _updateMovie = MutableLiveData<UiState<String>>()
+    val updateMovie : LiveData<UiState<String>>
+        get() = _updateMovie
+
+    fun updateMovie(movieDetail: MovieDetail){
+        _updateMovie.value = UiState.Loading
+        movieUseCase.updateMovieDetail(movieDetail) {
+            _updateMovie.value = it
+        }
+    }
+
+    private val _cinemaListForMovie = MutableLiveData<UiState<List<Cinema>>>()
+    val cinemaListForMovie : LiveData<UiState<List<Cinema>>>
+        get() = _cinemaListForMovie
+    fun getCinemaListForMovie(movieId : String){
+        _cinemaListForMovie.value = UiState.Loading
+        movieUseCase.getCinemaListForCinema(movieId) {
+            _cinemaListForMovie.value = it
+        }
+    }
+
+    private val _updateCinema = MutableLiveData<UiState<String>>()
+    val updateCinema : LiveData<UiState<String>>
+        get() = _updateCinema
+
+    fun updateCinema(cinema : Cinema){
+        _updateCinema.value = UiState.Loading
+        movieUseCase.updateCinema(cinema) {
+            _updateCinema.value = it
+        }
+    }
+
+
+    private val _deleteSeat = MutableLiveData<UiState<String>>()
+    val deleteSeat : LiveData<UiState<String>>
+        get() = _deleteSeat
+
+    fun deleteSeat(cinemaId : String){
+        _deleteSeat.value = UiState.Loading
+        movieUseCase.deleteSeat(cinemaId) {
+            _deleteSeat.value = it
+        }
+    }
+
+    private val _deleteCinema = MutableLiveData<UiState<String>>()
+    val deleteCinema : LiveData<UiState<String>>
+        get() = _deleteCinema
+
+    fun deleteCinema(cinemaId : String){
+        _deleteCinema.value = UiState.Loading
+        movieUseCase.deleteCinema(cinemaId) {
+            _deleteCinema.value = it
+        }
+    }
 }

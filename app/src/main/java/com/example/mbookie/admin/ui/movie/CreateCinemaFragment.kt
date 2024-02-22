@@ -1,11 +1,13 @@
 package com.example.mbookie.admin.ui.movie
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -23,12 +25,13 @@ import com.example.mbookie.util.UiState
 import com.example.mbookie.util.showToast
 import com.example.mbookie.util.totalSeatList
 import com.example.mbookie.viewmodel.MovieViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.ArrayList
 
 
 class CreateCinemaFragment : Fragment() {
 
-    private lateinit var binding : FragmentCreateCinemaBinding
+    private lateinit var binding: FragmentCreateCinemaBinding
 
     private var selectedPos = 0
     private val movieViewModel: MovieViewModel by activityViewModels()
@@ -41,20 +44,38 @@ class CreateCinemaFragment : Fragment() {
     private var rows = 0
     private var columns = 10
 
+    private var oldName = ""
+    private var oldAddress = ""
+    private var oldTotalSeat = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentCreateCinemaBinding.inflate(layoutInflater,container,false)
+        binding = FragmentCreateCinemaBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //hide bottom navigation form Home Page Activity
+        activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.isVisible = false
+
+        if (movieViewModel.cinemaId.isNotEmpty()) {
+            setEditLayout()
+        }
+
         binding.tvSave.setOnClickListener {
-            createCinema()
+            if (movieViewModel.cinemaId.isNotEmpty()) {
+                updateCinema()
+            } else
+                createCinema()
+        }
+
+        binding.ivBack.setOnClickListener {
+            findNavController().navigateUp()
         }
 
         bindMovieCategoryDropDown(totalSeatList)
@@ -62,12 +83,26 @@ class CreateCinemaFragment : Fragment() {
 
     }
 
+    private fun setEditLayout() {
+        binding.tvSelectGenreTitle.text = "Edit Cinema"
+
+        binding.etCinema.setText(movieViewModel.editCinemaDetail.name)
+        oldName = movieViewModel.editCinemaDetail.name.toString()
+
+        binding.etAddress.setText(movieViewModel.editCinemaDetail.address)
+        oldAddress = movieViewModel.editCinemaDetail.address.toString()
+
+        binding.actvTotalSeat.setText(movieViewModel.editCinemaDetail.totalSeat.toString())
+        oldTotalSeat = movieViewModel.editCinemaDetail.totalSeat!!
+
+    }
+
     private fun createCinema() {
         movieViewModel.saveCinema(
             Cinema(
-                cName = binding.etCinema.text.toString(),
-                cTotalSeat = binding.actvTotalSeat.text.toString().toInt(),
-                cAddress = binding.etAddress.text.toString()
+                name = binding.etCinema.text.toString(),
+                totalSeat = binding.actvTotalSeat.text.toString().toInt(),
+                address = binding.etAddress.text.toString()
             )
         )
 
@@ -90,15 +125,17 @@ class CreateCinemaFragment : Fragment() {
         }
     }
 
-    private fun saveSeat(cinemaId: String) {
-
-        val seatArrayList = createSeatArrayList(rows, columns, cinemaId)
-
-        movieViewModel.saveSeat(
-            seatArrayList
+    private fun updateCinema() {
+        movieViewModel.updateCinema(
+            Cinema(
+                id = movieViewModel.editCinemaDetail.id,
+                name = binding.etCinema.text.toString(),
+                totalSeat = binding.actvTotalSeat.text.toString().toInt(),
+                address = binding.etAddress.text.toString()
+            )
         )
 
-        movieViewModel.saveSeat.observe(viewLifecycleOwner) { state ->
+        movieViewModel.updateCinema.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Failure -> {
                     loadingDialog.hideDialog()
@@ -111,8 +148,67 @@ class CreateCinemaFragment : Fragment() {
 
                 is UiState.Success -> {
                     loadingDialog.hideDialog()
-                    requireActivity().showToast("Movie has been successfully created.")
-                    findNavController().popBackStack()
+                    requireActivity().showToast(state.data)
+
+                    if (binding.actvTotalSeat.text.toString().toInt() != oldTotalSeat) {
+                        deleteSeat(movieViewModel.editCinemaDetail.id.toString())
+                    } else {
+                        findNavController().navigateUp()
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    private fun deleteSeat(cinemaId: String) {
+        movieViewModel.deleteSeat(
+            cinemaId
+        )
+        movieViewModel.deleteSeat.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Failure -> {
+
+                    requireActivity().showToast(state.error.toString())
+                }
+
+                UiState.Loading -> {
+
+                }
+
+                is UiState.Success -> {
+
+                    requireActivity().showToast(state.data)
+                    saveSeat(cinemaId)
+                }
+            }
+        }
+    }
+
+    private fun saveSeat(cinemaId: String) {
+
+        val seatArrayList = createSeatArrayList(rows, columns, cinemaId)
+
+        movieViewModel.saveSeat(
+            seatArrayList
+        )
+
+        movieViewModel.saveSeat.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Failure -> {
+//                    loadingDialog.hideDialog()
+                    requireActivity().showToast(state.error.toString())
+                }
+
+                UiState.Loading -> {
+//                    loadingDialog.showDialog()
+                }
+
+                is UiState.Success -> {
+//                    loadingDialog.hideDialog()
+                    requireActivity().showToast("Seat has been successfully created.")
+                    findNavController().navigateUp()
                 }
             }
         }
@@ -149,7 +245,7 @@ class CreateCinemaFragment : Fragment() {
         }
     }
 
-    private fun bindMovieCategoryDropDown(totalSeatList : ArrayList<TotalSeatData>) {
+    private fun bindMovieCategoryDropDown(totalSeatList: ArrayList<TotalSeatData>) {
         binding.actvTotalSeat.setDropDownBackgroundResource(R.color.white)
         val mAdapter =
             TotalSeatAdapter(
@@ -173,17 +269,23 @@ class CreateCinemaFragment : Fragment() {
             binding.tvSave.checkRequirement()
         }
     }
-    private fun TextView.checkRequirement() {
-//        isEnabled = if (movieViewModel.genreId.isNullOrEmpty()) {
-//            binding.etGenre.text.toString().trim().isNotEmpty()
-//        } else {
-//            binding.etGenre.text.toString().trim().isNotEmpty() &&
-//                    (binding.etGenre.text.toString() != oldGenre)
-//        }
 
-        isEnabled = binding.etCinema.text.toString().trim().isNotEmpty() &&
-                binding.actvTotalSeat.text.toString().trim().isNotEmpty() && (selectedPos != 0) &&
-                binding.etAddress.text.toString().trim().isNotEmpty()
+    private fun TextView.checkRequirement() {
+
+        isEnabled = if (movieViewModel.cinemaId.isEmpty()) {
+            binding.etCinema.text.toString().trim().isNotEmpty() &&
+                    binding.actvTotalSeat.text.toString().trim()
+                        .isNotEmpty() && (selectedPos != 0) &&
+                    binding.etAddress.text.toString().trim().isNotEmpty()
+        } else {
+            binding.etCinema.text.toString().trim().isNotEmpty() &&
+                    binding.actvTotalSeat.text.toString().trim()
+                        .isNotEmpty() &&
+                    binding.etAddress.text.toString().trim().isNotEmpty() &&
+                    ((binding.etCinema.text.toString() != oldName) || (binding.actvTotalSeat.text.toString()
+                        .toInt() != oldTotalSeat)
+                            || (binding.etAddress.text.toString() != oldAddress))
+        }
 
     }
 

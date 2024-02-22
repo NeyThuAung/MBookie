@@ -38,8 +38,8 @@
             android:id="@+id/action_addMovieFragment_to_selectGenreFragment"
             app:destination="@id/selectGenreFragment" />
         <action
-            android:id="@+id/action_addMovieFragment_to_selectCinemaFragment"
-            app:destination="@id/selectCinemaFragment" />
+            android:id="@+id/action_addMovieFragment_to_availableCinemaFragment"
+            app:destination="@id/availableCinemaFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectGenreFragment"
@@ -61,12 +61,60 @@
         android:label="fragment_select_cinema"
         tools:layout="@layout/fragment_select_cinema" >
         <action
-            android:id="@+id/action_selectCinemaFragment_to_createCinemaFragment"
-            app:destination="@id/createCinemaFragment" />
+            android:id="@+id/action_selectCinemaFragment_to_manageCinemaFragment"
+            app:destination="@id/manageCinemaFragment" />
+        <action
+            android:id="@+id/action_selectCinemaFragment_to_cinemaShowTimesFragment"
+            app:destination="@id/cinemaShowTimesFragment" />
     </fragment>
     <fragment
         android:id="@+id/createCinemaFragment"
         android:name="com.example.mbookie.admin.ui.movie.CreateCinemaFragment"
         android:label="CreateCinemaFragment" />
+    <fragment
+        android:id="@+id/availableCinemaFragment"
+        android:name="com.example.mbookie.admin.ui.movie.AvailableCinemaFragment"
+        android:label="fragment_available_cinema"
+        tools:layout="@layout/fragment_available_cinema" >
+        <action
+            android:id="@+id/action_availableCinemaFragment_to_selectCinemaFragment"
+            app:destination="@id/selectCinemaFragment" />
+        <action
+            android:id="@+id/action_availableCinemaFragment_to_cinemaShowTimesFragment"
+            app:destination="@id/cinemaShowTimesFragment" />
+        <action
+            android:id="@+id/action_availableCinemaFragment_to_movieListFragment"
+            app:destination="@id/movieListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageCinemaFragment"
+        android:name="com.example.mbookie.admin.ui.movie.ManageCinemaFragment"
+        android:label="fragment_manage_cinema"
+        tools:layout="@layout/fragment_manage_cinema" >
+        <action
+            android:id="@+id/action_manageCinemaFragment_to_createCinemaFragment"
+            app:destination="@id/createCinemaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setUpShowTimeFragment"
+        android:name="com.example.mbookie.admin.ui.movie.SetUpShowTimeFragment"
+        android:label="fragment_set_up_show_time"
+        tools:layout="@layout/fragment_set_up_show_time" >
+        <action
+            android:id="@+id/action_setUpShowTimeFragment_to_cinemaShowTimesFragment"
+            app:destination="@id/cinemaShowTimesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cinemaShowTimesFragment"
+        android:name="com.example.mbookie.admin.ui.movie.CinemaShowTimesFragment"
+        android:label="fragment_cinema_show_times"
+        tools:layout="@layout/fragment_cinema_show_times" >
+        <action
+            android:id="@+id/action_cinemaShowTimesFragment_to_setUpShowTimeFragment"
+            app:destination="@id/setUpShowTimeFragment" />
+        <action
+            android:id="@+id/action_cinemaShowTimesFragment_to_movieListFragment"
+            app:destination="@id/movieListFragment" />
+    </fragment>
 
 </navigation>

@@ -20,8 +20,10 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.mbookie.R
 import com.example.mbookie.admin.ui.adapter.MovieCategoryAdapter
+import com.example.mbookie.data.model.Genre
 import com.example.mbookie.data.model.MovieDetail
 import com.example.mbookie.databinding.FragmentAddMovieBinding
 import com.example.mbookie.util.LoadingDialog
@@ -53,8 +55,20 @@ class AddMovieFragment : Fragment() {
     private var selectedGenreIdList: ArrayList<String> = arrayListOf()
 
     val storageRef = FirebaseStorage.getInstance()
-    private var moviePosterImg =  ""
+    private var moviePosterImg = ""
 
+    private var editMoviePoster = 0 // 0 is Normal // 1 is edit
+
+    private var oldMovieName = ""
+    private var oldMovieCategoryId = -1
+    private var oldSelectedGenre = ""
+    private var oldSelectedGenreIdList = arrayListOf<String>()
+    private var oldLanguage = ""
+    private var oldDuration = ""
+    private var oldReleaseDate = ""
+    private var oldCensorShip = ""
+    private var oldTrailerLint = ""
+    private var oldDescription = ""
 
     private val loadingDialog: LoadingDialog by lazy {
         LoadingDialog(
@@ -81,6 +95,7 @@ class AddMovieFragment : Fragment() {
             binding.etSelectGenre.setText(selectedGenre)
             binding.tvSave.checkRequirement()
         }
+
     }
 
     override fun onCreateView(
@@ -97,6 +112,12 @@ class AddMovieFragment : Fragment() {
 
         //hide bottom navigation form Home Page Activity
         activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.isVisible = false
+
+        if (movieViewModel.movieId.isNotEmpty()) {
+            setMovieEditLayout()
+        } else {
+            binding.tvAddNewMovieTitle.text = "Create Movie"
+        }
 
         onBackPressed()
         onClickEvents()
@@ -127,12 +148,77 @@ class AddMovieFragment : Fragment() {
             binding.tvSave.checkRequirement()
         }
 
+        binding.etLanguage.doAfterTextChanged {
+            binding.tvSave.checkRequirement()
+        }
+
+    }
+
+    private fun setMovieEditLayout() {
+        binding.tvAddNewMovieTitle.text = "Edit Movie"
+
+        if (movieViewModel.editMovieDetail.mPosterImg.toString().isNotEmpty()) {
+            binding.llCamera.isVisible = false
+            binding.ivEditMoviePhoto.isVisible = true
+
+            moviePosterImg = movieViewModel.editMovieDetail.mPosterImg!!
+
+            Glide.with(binding.root)
+                .load(movieViewModel.editMovieDetail.mPosterImg)
+                .into(binding.ivMovieCoverImage)
+
+        } else {
+            binding.llCamera.isVisible = true
+            binding.ivEditMoviePhoto.isVisible = false
+        }
+
+        binding.etMovieTitle.setText(movieViewModel.editMovieDetail.mTitle)
+
+        selectedCategoryId = movieViewModel.editMovieDetail.mCategoryId!!
+        binding.actvMovieCategory.setText(movieCategoryList[selectedCategoryId].movieCategoryName)
+
+        selectedGenreIdList.clear()
+        selectedGenreIdList.addAll(movieViewModel.editMovieDetail.mGenreIdList!!)
+        binding.etSelectGenre.setText(movieViewModel.editMovieDetail.mGenre)
+
+        binding.etLanguage.setText(movieViewModel.editMovieDetail.mLanguage)
+        binding.etDuration.setText(movieViewModel.editMovieDetail.mDuration)
+        binding.etReleaseDate.setText(movieViewModel.editMovieDetail.mReleaseDate)
+
+        val censorship = movieViewModel.editMovieDetail.mCensorship
+        if (!censorship.isNullOrEmpty()) {
+            binding.etCensorship.setText(censorship)
+            oldCensorShip = movieViewModel.editMovieDetail.mCensorship.toString()
+        }
+
+        val trailer = movieViewModel.editMovieDetail.mTrailerLink
+        if (!trailer.isNullOrEmpty()) {
+            binding.etTrailerLink.setText(trailer)
+            oldTrailerLint = movieViewModel.editMovieDetail.mTrailerLink.toString()
+        }
+
+        val desc = movieViewModel.editMovieDetail.mDescription
+        if (!desc.isNullOrEmpty()) {
+            binding.etDescription.setText(desc)
+            oldDescription = movieViewModel.editMovieDetail.mDescription.toString()
+        }
+
+        oldMovieName = movieViewModel.editMovieDetail.mTitle.toString()
+        oldMovieCategoryId = movieViewModel.editMovieDetail.mCategoryId!!
+        oldSelectedGenreIdList = movieViewModel.editMovieDetail.mGenreIdList!!
+        oldSelectedGenre = movieViewModel.editMovieDetail.mGenre.toString()
+        oldLanguage = movieViewModel.editMovieDetail.mLanguage.toString()
+        oldDuration = movieViewModel.editMovieDetail.mDuration.toString()
+        oldReleaseDate = movieViewModel.editMovieDetail.mReleaseDate.toString()
+
+
     }
 
     private fun onBackPressed() {
-        val callback = object : OnBackPressedCallback(true){
+        val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 movieViewModel.selectedGenreList.clear()
+                findNavController().popBackStack()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
@@ -195,7 +281,12 @@ class AddMovieFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        binding.cvBackMovie.setOnClickListener {
+        binding.llCamera.setOnClickListener {
+            pickProfile()
+        }
+
+        binding.ivEditMoviePhoto.setOnClickListener {
+            editMoviePoster = 1
             pickProfile()
         }
 
@@ -213,16 +304,28 @@ class AddMovieFragment : Fragment() {
 
         binding.tvSave.setOnClickListener {
 
-            storageRef.getReference("Images")
-                .child(System.currentTimeMillis().toString())
-                .putFile(movieCoverUri)
-                .addOnSuccessListener { task ->
+            if (movieViewModel.movieId.isNotEmpty()){
+                if (editMoviePoster == 1){
+                    storageRef.getReference("Images")
+                        .child(System.currentTimeMillis().toString())
+                        .putFile(movieCoverUri)
+                        .addOnSuccessListener { task ->
 
-                    task.metadata!!.reference!!.downloadUrl
-                        .addOnSuccessListener {
-                            moviePosterImg = it.toString()
+                            task.metadata!!.reference!!.downloadUrl
+                                .addOnSuccessListener {
+                                    Log.d("JHKHKJ", "onClickEvents: ${it.toString()}")
+                                    movieViewModel.editMovieDetail.mPosterImg = it.toString()
 
-                            saveMovieDetails()
+                                    updateMovie()
+
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        it.localizedMessage,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
 
                         }
                         .addOnFailureListener {
@@ -232,15 +335,41 @@ class AddMovieFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                }else{
+                    updateMovie()
+                }
+            }else{
+                storageRef.getReference("Images")
+                    .child(System.currentTimeMillis().toString())
+                    .putFile(movieCoverUri)
+                    .addOnSuccessListener { task ->
 
-                }
-                .addOnFailureListener {
-                    Toast.makeText(
-                        requireContext(),
-                        it.localizedMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                        task.metadata!!.reference!!.downloadUrl
+                            .addOnSuccessListener {
+                                moviePosterImg = it.toString()
+
+                                saveMovieDetails()
+
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(
+                                    requireContext(),
+                                    it.localizedMessage,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            requireContext(),
+                            it.localizedMessage,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            }
+
+
 
         }
 
@@ -254,11 +383,13 @@ class AddMovieFragment : Fragment() {
                 mTitle = binding.etMovieTitle.text.toString(),
                 mCategoryId = selectedCategoryId,
                 mGenreIdList = selectedGenreIdList,
+                mGenre = binding.etSelectGenre.text.toString(),
                 mDuration = binding.etDuration.text.toString(),
                 mReleaseDate = binding.etReleaseDate.text.toString(),
                 mCensorship = binding.etCensorship.text.toString(),
                 mTrailerLink = binding.etTrailerLink.text.toString(),
-                mDescription = binding.etDescription.text.toString()
+                mDescription = binding.etDescription.text.toString(),
+                mLanguage = binding.etLanguage.text.toString()
             )
         )
 
@@ -275,12 +406,54 @@ class AddMovieFragment : Fragment() {
 
                 is UiState.Success -> {
                     loadingDialog.hideDialog()
-                    requireActivity().showToast(state.data)
+                    requireActivity().showToast("Movie has been successfully created.")
                     movieViewModel.selectedGenreList.clear()
-                    findNavController().navigate(R.id.action_addMovieFragment_to_selectCinemaFragment)
+                    movieViewModel.movieId = state.data
+                    findNavController().navigate(R.id.action_addMovieFragment_to_availableCinemaFragment)
                 }
             }
         }
+    }
+
+    private fun updateMovie() {
+        movieViewModel.updateMovie(
+            MovieDetail(
+                mId = movieViewModel.editMovieDetail.mId,
+                mPosterImg = movieViewModel.editMovieDetail.mPosterImg,
+                mTitle = binding.etMovieTitle.text.toString(),
+                mCategoryId = selectedCategoryId,
+                mGenreIdList = selectedGenreIdList,
+                mGenre = binding.etSelectGenre.text.toString(),
+                mDuration = binding.etDuration.text.toString(),
+                mReleaseDate = binding.etReleaseDate.text.toString(),
+                mCensorship = binding.etCensorship.text.toString(),
+                mTrailerLink = binding.etTrailerLink.text.toString(),
+                mDescription = binding.etDescription.text.toString(),
+                mLanguage = binding.etLanguage.text.toString()
+            )
+        )
+
+        movieViewModel.updateMovie.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Failure -> {
+                    loadingDialog.hideDialog()
+                    requireActivity().showToast(state.error.toString())
+                }
+
+                UiState.Loading -> {
+                    loadingDialog.showDialog()
+                }
+
+                is UiState.Success -> {
+                    loadingDialog.hideDialog()
+                    requireActivity().showToast(state.data)
+
+                    movieViewModel.movieId = movieViewModel.editMovieDetail.mId.toString()
+                    findNavController().navigate(R.id.action_addMovieFragment_to_availableCinemaFragment)
+                }
+            }
+        }
+
     }
 
     private fun openDatePicker() {
@@ -324,11 +497,24 @@ class AddMovieFragment : Fragment() {
     }
 
     private fun TextView.checkRequirement() {
-        isEnabled =
+        isEnabled = if (movieViewModel.movieId.isNotEmpty()) {
             binding.etMovieTitle.text.toString().trim().isNotEmpty() && selectedCategoryId != -1 &&
                     binding.etSelectGenre.text.toString().trim()
                         .isNotEmpty() && binding.etDuration.text.toString().trim().isNotEmpty() &&
-                    binding.etReleaseDate.text.toString().trim().isNotEmpty()
+                    binding.etReleaseDate.text.toString().trim()
+                        .isNotEmpty() && binding.etLanguage.text.toString().trim().isNotEmpty() &&
+                    ((binding.etMovieTitle.text.toString() != oldMovieName) || (selectedCategoryId != oldMovieCategoryId)
+                            || (binding.etSelectGenre.text.toString() != oldSelectedGenre) || (binding.etLanguage.text.toString() != oldLanguage) ||
+                            (binding.etDuration.text.toString() != oldDuration) || (binding.etReleaseDate.text.toString() != oldReleaseDate) ||
+                            (binding.etCensorship.text.toString() != oldCensorShip) || (binding.etTrailerLink.text.toString() != oldTrailerLint) ||
+                            (binding.etDescription.text.toString() != oldDescription))
+        } else {
+            binding.etMovieTitle.text.toString().trim().isNotEmpty() && selectedCategoryId != -1 &&
+                    binding.etSelectGenre.text.toString().trim()
+                        .isNotEmpty() && binding.etDuration.text.toString().trim().isNotEmpty() &&
+                    binding.etReleaseDate.text.toString().trim()
+                        .isNotEmpty() && binding.etLanguage.text.toString().trim().isNotEmpty()
+        }
     }
 
     private val startForProfileImageResult =

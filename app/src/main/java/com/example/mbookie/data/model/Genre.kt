@@ -12,9 +12,18 @@ data class MovieDetail(
     var mTitle : String ?="",
     var mCategoryId : Int ?=0,
     var mGenreIdList : ArrayList<String> ?= arrayListOf(),
+    var mGenre : String ?="",
     var mDuration : String ?="",
     var mReleaseDate : String ?="",
     var mCensorship : String ?="",
     var mTrailerLink : String ?="",
-    var mDescription : String ?=""
+    var mDescription : String ?="",
+    var mLanguage : String ?=""
+)
+
+data class MovieShowCinema(
+    var id: String ?="",
+    var movieId : String ?="",
+    var showId : String ?="",
+    var cinema : String ?=""
 )

@@ -14,7 +14,7 @@ class GenreAdapter(
 
     interface OnItemClickListener {
         fun onEditClick(genreInfo: Genre)
-        fun onDeleteClick(genreId : String,deletePos : Int)
+        fun onDeleteClick(genreId : String, deletePos : Int)
         fun onCheckCategoryState(checkedGenre: Genre)
         fun onUncheckCategoryState(genreId : String)
     }

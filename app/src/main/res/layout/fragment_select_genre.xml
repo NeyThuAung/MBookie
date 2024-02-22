@@ -113,19 +113,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
-        android:id="@+id/progressBar"
-        android:layout_gravity="center"
-        android:indeterminateTint="@color/green"
-        android:indeterminate="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"/>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:visibility="visible"
         android:id="@+id/floatingActionAddGenre"

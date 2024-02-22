@@ -285,6 +285,41 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilLanguage"
+                style="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="14dp"
+                android:layout_marginTop="15dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/language"
+                android:textColorHint="@color/light_grey"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="@color/edittext_box_color"
+                app:boxStrokeWidth="1.5dp"
+                app:boxStrokeWidthFocused="1.5dp"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/edittext_box_color"
+                app:layout_constraintTop_toBottomOf="@id/tilSelectGenre">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp"
+                    tools:ignore="LabelFor" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilDuration"
                 style="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
@@ -304,7 +339,7 @@
                 app:boxStrokeWidthFocused="1.5dp"
                 app:hintEnabled="true"
                 app:hintTextColor="@color/edittext_box_color"
-                app:layout_constraintTop_toBottomOf="@id/tilSelectGenre">
+                app:layout_constraintTop_toBottomOf="@id/tilLanguage">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDuration"

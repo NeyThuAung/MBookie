@@ -5,15 +5,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mbookie.R
+import com.example.mbookie.admin.ui.adapter.GenreAdapter
+import com.example.mbookie.admin.ui.adapter.MovieListAdapter
+import com.example.mbookie.data.model.Genre
+import com.example.mbookie.data.model.MovieDetail
 import com.example.mbookie.databinding.FragmentMovieListBinding
+import com.example.mbookie.util.LoadingDialog
+import com.example.mbookie.util.UiState
+import com.example.mbookie.viewmodel.MovieViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(), MovieListAdapter.OnItemClickListener {
 
     private lateinit var binding : FragmentMovieListBinding
+
+    private val movieViewModel: MovieViewModel by activityViewModels()
+    private val loadingDialog: LoadingDialog by lazy {
+        LoadingDialog(
+            requireActivity()
+        )
+    }
+
+    private lateinit var movieListAdapter: MovieListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,5 +54,42 @@ class MovieListFragment : Fragment() {
             findNavController().navigate(R.id.action_movieListFragment_to_addMovieFragment)
         }
 
+        movieViewModel.getMovieList()
+        movieViewModel.movieList.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Failure -> {
+                    loadingDialog.hideDialog()
+                    Toast.makeText(requireContext(), state.error.toString(), Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                UiState.Loading -> {
+                    loadingDialog.showDialog()
+                }
+
+                is UiState.Success -> {
+                    loadingDialog.hideDialog()
+
+                    movieListAdapter = MovieListAdapter(state.data as ArrayList<MovieDetail>,this)
+                    binding.recMovieList.apply {
+                        setHasFixedSize(true)
+                        layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                        adapter = movieListAdapter
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    override fun onMovieRootClick(movieDetail : MovieDetail) {
+        movieViewModel.movieId = movieDetail.mId.toString()
+        movieViewModel.editMovieDetail = movieDetail
+        findNavController().navigate(R.id.action_movieListFragment_to_addMovieFragment)
     }
 }

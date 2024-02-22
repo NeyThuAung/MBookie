@@ -5,12 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.mbookie.R
 import com.example.mbookie.databinding.FragmentBookingListBinding
+import com.example.mbookie.util.LoadingDialog
+import com.example.mbookie.viewmodel.MovieViewModel
 
 class BookingListFragment : Fragment() {
 
     private lateinit var binding : FragmentBookingListBinding
+    private val movieViewModel: MovieViewModel by activityViewModels()
+    private val loadingDialog: LoadingDialog by lazy {
+        LoadingDialog(
+            requireActivity()
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

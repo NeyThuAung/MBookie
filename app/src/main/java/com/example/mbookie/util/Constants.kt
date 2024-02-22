@@ -8,5 +8,7 @@ object FireStoreTables{
     const val MOVIE = "movie"
     const val CINEMA = "cinema"
     const val SEAT = "seat"
+    const val SHOWTIME = "showtime"
+    const val SHOW_MOVIE_CINEMA = "show_movie_cinema"
 
 }

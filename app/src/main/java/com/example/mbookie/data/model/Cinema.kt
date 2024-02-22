@@ -1,10 +1,10 @@
 package com.example.mbookie.data.model
 
 data class Cinema(
-    var cId : String ?="",
-    val cName : String ?="",
-    val cTotalSeat : Int ?=0,
-    val cAddress : String ?=""
+    var id : String ?="",
+    val name : String ?="",
+    val totalSeat : Int ?=0,
+    val address : String ?=""
 )
 
 data class Seat(

@@ -49,4 +49,14 @@
     <string name="enter_cinema_name">Enter Cinema Name</string>
     <string name="total_number_of_seat">Total Number of Seat</string>
     <string name="address">Address</string>
+    <string name="language">Language</string>
+    <string name="movie_list">Movie List</string>
+    <string name="set_up_showtime">Set Up Show</string>
+    <string name="manage_cinema">Manage Cinema</string>
+    <string name="cinema_showtimes">Cinema Showtimes</string>
+    <string name="selected_cinema">Selected cinema</string>
+    <string name="select_time">Select time</string>
+    <string name="showtimes">Showtimes</string>
+    <string name="available_cinema">Available Cinema</string>
+    <string name="add_cinema">Add cinema</string>
 </resources>

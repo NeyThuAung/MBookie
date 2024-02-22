@@ -3,43 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".admin.ui.fragment.DashBoardFragment">
+    android:background="@color/black"
+    tools:context=".admin.ui.movie.ManageCinemaFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clToolBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/clActionBar"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize">
-
-        <TextView
-            android:id="@+id/tvMovieListTitle"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="16dp"
-            android:text="Movie List"
-            android:textSize="18sp"
-            android:fontFamily="@font/inter_medium"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:layout_height="?android:attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/icMovieListSearch"
-            app:layout_constraintTop_toTopOf="@id/tvMovieListTitle"
-            app:layout_constraintBottom_toBottomOf="@id/tvMovieListTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_search"
-            android:paddingHorizontal="10dp"
-            android:layout_marginEnd="9dp"
-            android:paddingVertical="5dp"
+            android:id="@+id/ivBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/app_name" />
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/app_name"
+            android:paddingVertical="3dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvManageCinemaTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Manage Cinema"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivBack"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,19 +52,19 @@
 
     <androidx.recyclerview.widget.RecyclerView
         tools:visibility="visible"
-        android:id="@+id/recMovieList"
+        android:id="@+id/recCinemaList"
         android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@id/clToolBar"
+        app:layout_constraintTop_toBottomOf="@id/clActionBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/movie_list_item_card"
+        android:layout_marginBottom="5dp"
+        tools:listitem="@layout/manage_cinema_item_card"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:visibility="visible"
-        android:id="@+id/floatingActionAddMovie"
+        android:id="@+id/floatingActionAddCinema"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="20dp"

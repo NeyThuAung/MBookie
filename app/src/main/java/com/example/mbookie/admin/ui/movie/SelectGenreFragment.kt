@@ -140,6 +140,7 @@ class SelectGenreFragment : Fragment(), GenreAdapter.OnItemClickListener,
     }
 
     override fun onDeleteClick(genreId: String, deletePos: Int) {
+        Log.d("HKLJHKJH", "onDeleteClick: $deletePos")
         deleteGenreId = genreId
         deletePosition = deletePos
         deleteDialog.showDialog("Are you sure?", this, "Are you sure want to delete this genre?")
@@ -186,8 +187,13 @@ class SelectGenreFragment : Fragment(), GenreAdapter.OnItemClickListener,
                 is UiState.Success -> {
                     loadingDialog.hideDialog()
                     requireActivity().showToast(state.data)
-                    movieViewModel.genreLst.removeAt(deletePosition)
-                    genreAdapter.notifyDataSetChanged()
+                    // Remove the item from the genreList
+                    if (deletePosition >= 0 && deletePosition < movieViewModel.genreLst.size) {
+                        movieViewModel.genreLst.removeAt(deletePosition)
+                        genreAdapter.notifyDataSetChanged() // Update the adapter
+                    } else {
+                        Log.e("SelectGenreFragment", "Invalid delete position: $deletePosition")
+                    }
                 }
             }
         }

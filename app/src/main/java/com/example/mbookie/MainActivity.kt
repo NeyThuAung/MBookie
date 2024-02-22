@@ -37,21 +37,31 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                val currentUser = auth.currentUser
+//        Handler(Looper.getMainLooper()).postDelayed(
+//            {
+//                val currentUser = auth.currentUser
+//
+//                if (currentUser != null){
+//                    val userId = auth.currentUser?.uid.toString()
+//                    getUserRole(userId)
+//                }else{
+//                    val intent = Intent(applicationContext,LoginRegisterActivity::class.java)
+//                    startActivity(intent)
+//                    finish()
+//                }
+//
+//            },1000
+//        )
+        val currentUser = auth.currentUser
 
-                if (currentUser != null){
-                    val userId = auth.currentUser?.uid.toString()
-                    getUserRole(userId)
-                }else{
-                    val intent = Intent(applicationContext,LoginRegisterActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-
-            },1000
-        )
+        if (currentUser != null){
+            val userId = auth.currentUser?.uid.toString()
+            getUserRole(userId)
+        }else{
+            val intent = Intent(applicationContext,LoginRegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
     }
 
