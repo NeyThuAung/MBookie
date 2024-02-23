@@ -155,6 +155,8 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
+                tools:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/tvShowTimeTitle"
                 app:layout_constraintTop_toBottomOf="@id/cvCinema"
                 app:layout_constraintStart_toStartOf="parent"
@@ -168,6 +170,7 @@
                 android:layout_height="wrap_content"/>
 
             <androidx.recyclerview.widget.RecyclerView
+                tools:visibility="visible"
                 android:id="@+id/recSelectedShowtime"
                 app:layout_constraintTop_toBottomOf="@id/tvShowTimeTitle"
                 android:layout_marginHorizontal="9dp"
@@ -180,6 +183,36 @@
                 android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/llNoShowtimeFound"
+                android:layout_marginTop="100dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/cvCinema"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:src="@drawable/ic_no_data_found"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/app_name" />
+
+                <TextView
+                    android:text="There is no showtimes for this cinema !\nPlease add showtimes!"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/inter_semibold"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -216,7 +249,7 @@
 
             <TextView
                 android:id="@+id/tvAddCinema"
-                android:text="Add Show Date"
+                android:text="@string/add_new_showtime"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:fontFamily="@font/inter_medium"

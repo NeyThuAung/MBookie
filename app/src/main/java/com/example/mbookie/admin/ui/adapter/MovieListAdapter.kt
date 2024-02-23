@@ -17,7 +17,8 @@ class MovieListAdapter(
 ) : RecyclerView.Adapter<MovieListAdapter.MovieListHolder>() {
 
     interface OnItemClickListener {
-        fun onMovieRootClick(movieDetail : MovieDetail)
+        fun onEditMovieClick(movieDetail: MovieDetail)
+        fun onDeleteMovieClick(movieName : String, movieId : String, removePos : Int)
     }
 
     inner class MovieListHolder(private val binding : MovieListItemCardBinding) : RecyclerView.ViewHolder(binding.root){
@@ -33,8 +34,12 @@ class MovieListAdapter(
             binding.tvDuration.text = movie.mDuration
             binding.tvReleaseDate.text = movie.mReleaseDate
 
-            binding.root.setOnClickListener {
-                listener.onMovieRootClick(movie)
+            binding.ivEdit.setOnClickListener {
+                listener.onEditMovieClick(movie)
+            }
+
+            binding.ivDelete.setOnClickListener {
+                listener.onDeleteMovieClick(movie.mTitle.toString(), movie.mId.toString(),adapterPosition)
             }
         }
     }

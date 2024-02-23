@@ -73,10 +73,11 @@ class AvailableCinemaFragment : Fragment(),AvailableCinemaAdapter.OnItemClickLis
                     if (state.data.isNullOrEmpty()) {
                         binding.tvSelectedCinemaTitle.isVisible = false
                         binding.recSelectedCinemaForMovie.isVisible = false
+                        binding.llNoCinemaFound.isVisible = true
                     } else {
                         binding.tvSelectedCinemaTitle.isVisible = true
                         binding.recSelectedCinemaForMovie.isVisible = true
-
+                        binding.llNoCinemaFound.isVisible = false
                         availableCinemaAdapter = AvailableCinemaAdapter(state.data as ArrayList<Cinema>,this)
                         binding.recSelectedCinemaForMovie.apply {
                             setHasFixedSize(true)

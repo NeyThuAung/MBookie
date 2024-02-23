@@ -74,6 +74,10 @@ class SetUpShowTimeFragment : Fragment(),SelectedShowDateAdapter.OnItemClickList
 
     private fun onClickListener() {
 
+        binding.ivBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         binding.cvAddShowDate.setOnClickListener {
             openDatePicker()
         }

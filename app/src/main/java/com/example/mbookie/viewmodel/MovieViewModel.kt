@@ -34,6 +34,8 @@ class MovieViewModel @Inject constructor(
     var cinemaId =""
     var editCinemaDetail = Cinema()
 
+    var movieDetailList = arrayListOf<MovieDetail>()
+
     private val _saveGenre = MutableLiveData<UiState<String>>()
     val saveGenre : LiveData<UiState<String>>
         get() = _saveGenre
@@ -215,6 +217,17 @@ class MovieViewModel @Inject constructor(
         _deleteCinema.value = UiState.Loading
         movieUseCase.deleteCinema(cinemaId) {
             _deleteCinema.value = it
+        }
+    }
+
+    private val _deleteMovie = MutableLiveData<UiState<String>>()
+    val deleteMovie : LiveData<UiState<String>>
+        get() = _deleteMovie
+
+    fun deleteMovie(movieId : String){
+        _deleteMovie.value = UiState.Loading
+        movieUseCase.deleteMovie(movieId) {
+            _deleteMovie.value = it
         }
     }
 }

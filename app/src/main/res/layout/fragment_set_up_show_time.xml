@@ -121,7 +121,7 @@
 
                     <TextView
                         android:id="@+id/tvAddCinema"
-                        android:text="Add Show Date"
+                        android:text="@string/add_new_showtime"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:fontFamily="@font/inter_medium"

@@ -80,7 +80,15 @@ class ManageCinemaFragment : Fragment(), ManageCinemaAdapter.OnItemClickListener
                     movieViewModel.manageCinemaList.clear()
                     movieViewModel.manageCinemaList.addAll(state.data)
 
-                    initRecycler()
+                    if (movieViewModel.manageCinemaList.isNotEmpty()){
+                        binding.llNoCinemaFound.isVisible = false
+                        binding.recCinemaList.isVisible = true
+                        initRecycler()
+                    }else{
+                        binding.llNoCinemaFound.isVisible = true
+                        binding.recCinemaList.isVisible = false
+                    }
+
 
                 }
             }

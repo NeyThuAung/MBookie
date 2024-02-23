@@ -68,6 +68,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         tools:visibility="visible"
         android:id="@+id/recSelectCinemaList"
         android:layout_marginTop="15dp"
@@ -78,6 +79,37 @@
         tools:listitem="@layout/cinema_item_card"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/llNoCinemaFound"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/clActionBar"
+        app:layout_constraintBottom_toTopOf="@id/mbManageCinema"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:src="@drawable/ic_no_data_found"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:text="There is no cinema!\nPlease add new cinema!"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:fontFamily="@font/inter_semibold"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mbManageCinema"

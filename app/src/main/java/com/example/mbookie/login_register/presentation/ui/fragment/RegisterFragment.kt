@@ -87,7 +87,7 @@ class RegisterFragment : Fragment() {
     }
 
     //save user info to database table
-    private fun saveUserInfo(userId : String) {
+    private fun  saveUserInfo(userId : String) {
 
         if (adminOrCustomer == "0"){
             userTable = FireStoreTables.ADMIN

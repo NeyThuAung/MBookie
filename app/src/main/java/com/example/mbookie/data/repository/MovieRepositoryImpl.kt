@@ -545,5 +545,86 @@ class MovieRepositoryImpl(
             }
     }
 
+    override fun deleteMovie(movieId: String, result: (UiState<String>) -> Unit) {
+        database.collection(FireStoreTables.SHOW_MOVIE_CINEMA)
+            .whereEqualTo("movieId", movieId)
+            .get()
+            .addOnSuccessListener { smcQuerySnapshot ->
+                val batch = database.batch()
+                val showIdList = arrayListOf<String>()
+
+                if (!smcQuerySnapshot.isEmpty) {
+
+                    smcQuerySnapshot.documents.forEach { smcDocument ->
+                        batch.delete(smcDocument.reference) // Delete from SHOW_MOVIE_CINEMA
+                        val showMovieCinema = smcDocument.toObject(ShowMovieCinema::class.java)
+                        showIdList.add(showMovieCinema?.showId.toString())
+                    }
+
+
+                    if (showIdList.isNotEmpty()) {
+                        val showCollectionRef = database.collection(FireStoreTables.SHOWTIME)
+                        val showQuery = showCollectionRef.whereIn("sid", showIdList)
+                        showQuery
+                            .get()
+                            .addOnSuccessListener { showQuerySnapShot ->
+
+                                showQuerySnapShot.documents.forEach { document ->
+                                    batch.delete(document.reference)
+                                }
+
+                                batch.commit()
+                                    .addOnSuccessListener {
+                                        deleteMovieDocument(movieId, result)
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        result.invoke(
+                                            UiState.Failure(exception.localizedMessage)
+                                        )
+                                    }
+                            }
+                    } else {
+                        // No related documents found in SHOWTIME collection
+                        batch.commit()
+                            .addOnSuccessListener {
+                                deleteMovieDocument(movieId, result)
+                            }
+                            .addOnFailureListener { exception ->
+                                result.invoke(
+                                    UiState.Failure(exception.localizedMessage)
+                                )
+                            }
+                    }
+
+                } else {
+                    // No related documents found in SHOW_MOVIE_CINEMA collection
+                    deleteMovieDocument(movieId, result)
+                }
+
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage!!
+                    )
+                )
+            }
+    }
+
+    private fun deleteMovieDocument(movieId: String, result: (UiState<String>) -> Unit) {
+        val document = database.collection(FireStoreTables.MOVIE).document(movieId)
+        document
+            .delete()
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success("Movie '$movieId' has been successfully deleted.")
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(it.localizedMessage ?: "Failed to delete cinema.")
+                )
+            }
+    }
 
 }

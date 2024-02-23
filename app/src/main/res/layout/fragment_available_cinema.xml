@@ -122,6 +122,8 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
+                tools:visibility="gone"
+                android:visibility="gone"
                 android:id="@+id/tvSelectedCinemaTitle"
                 app:layout_constraintTop_toBottomOf="@id/cvAddCinema"
                 app:layout_constraintStart_toStartOf="parent"
@@ -135,6 +137,7 @@
                 android:layout_height="wrap_content"/>
 
             <androidx.recyclerview.widget.RecyclerView
+                tools:visibility="gone"
                 android:id="@+id/recSelectedCinemaForMovie"
                 app:layout_constraintTop_toBottomOf="@id/tvSelectedCinemaTitle"
                 android:layout_marginTop="15dp"
@@ -145,6 +148,36 @@
                 android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/llNoCinemaFound"
+                android:layout_marginTop="150dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/cvAddCinema"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:src="@drawable/ic_no_data_found"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/app_name" />
+
+                <TextView
+                    android:text="There is no selected cinema for this movie !\nPlease add cinema !"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/inter_semibold"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

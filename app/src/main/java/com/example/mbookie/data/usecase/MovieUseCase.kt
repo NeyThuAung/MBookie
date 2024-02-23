@@ -103,5 +103,11 @@ class MovieUseCase @Inject constructor(
             result(uiState)
         }
     }
+    fun deleteMovie(movieId : String, result: (UiState<String>) -> Unit) {
+        movieRepository.deleteMovie(movieId) { uiState ->
+            result(uiState)
+        }
+    }
+
 
 }

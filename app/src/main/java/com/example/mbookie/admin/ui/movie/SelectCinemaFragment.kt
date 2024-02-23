@@ -70,16 +70,24 @@ class SelectCinemaFragment : Fragment(),SelectCinemaAdapter.OnItemClickListener 
                 is UiState.Success -> {
                     loadingDialog.hideDialog()
                     Log.d("KHLKJHLJ", "onViewCreated: ${state.data}")
-                    selectCinemaAdapter = SelectCinemaAdapter(state.data as ArrayList<Cinema>,this)
-                    binding.recSelectCinemaList.apply {
-                        setHasFixedSize(true)
-                        layoutManager = LinearLayoutManager(
-                            requireContext(),
-                            LinearLayoutManager.VERTICAL,
-                            false
-                        )
-                        adapter = selectCinemaAdapter
+                    if (state.data.isNotEmpty()){
+                        binding.recSelectCinemaList.isVisible = true
+                        binding.llNoCinemaFound.isVisible = false
+                        selectCinemaAdapter = SelectCinemaAdapter(state.data as ArrayList<Cinema>,this)
+                        binding.recSelectCinemaList.apply {
+                            setHasFixedSize(true)
+                            layoutManager = LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+                            adapter = selectCinemaAdapter
+                        }
+                    }else{
+                        binding.recSelectCinemaList.isVisible = false
+                        binding.llNoCinemaFound.isVisible = false
                     }
+
 
                 }
             }

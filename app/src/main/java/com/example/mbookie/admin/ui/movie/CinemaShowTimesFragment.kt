@@ -97,10 +97,12 @@ class CinemaShowTimesFragment : Fragment(), ShowtimeAdapter.OnItemClickListener,
                         binding.tvShowTimeTitle.isVisible = false
                         binding.recSelectedShowtime.isVisible = false
                         binding.tvSave.isEnabled = false
+                        binding.llNoShowtimeFound.isVisible = true
                     } else {
                         binding.tvShowTimeTitle.isVisible = true
                         binding.recSelectedShowtime.isVisible = true
                         binding.tvSave.isEnabled = true
+                        binding.llNoShowtimeFound.isVisible = false
                         initRecycler()
                     }
                 }

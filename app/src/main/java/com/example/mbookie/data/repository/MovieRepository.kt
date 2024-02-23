@@ -35,4 +35,6 @@ interface MovieRepository {
     fun deleteSeat(cinemaId : String, result : (UiState<String>) -> Unit)
 
     fun deleteCinema(cinemaId : String, result : (UiState<String>) -> Unit)
+
+    fun   deleteMovie(movieId : String, result : (UiState<String>) -> Unit)
 }

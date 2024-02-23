@@ -59,4 +59,5 @@
     <string name="showtimes">Showtimes</string>
     <string name="available_cinema">Available Cinema</string>
     <string name="add_cinema">Add cinema</string>
+    <string name="add_new_showtime">Add new showtime</string>
 </resources>
