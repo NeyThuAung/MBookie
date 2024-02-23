@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.example.mbookie.databinding.FragmentRegisterBinding
 import com.example.mbookie.util.FireStoreTables
@@ -47,9 +49,53 @@ class RegisterFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         db = Firebase.firestore
 
+        setUpTextChangeListeners()
         onClickEvents()
 
     }
+
+    private fun setUpTextChangeListeners() {
+        binding.etEmail.doAfterTextChanged {
+            if (it.isNullOrBlank()) {
+                binding.tilEmail.error = "Enter email address."
+            } else if (!it.toString().isValidEmail()) {
+                binding.tilEmail.error = "Enter a valid email address."
+            } else {
+                binding.tilEmail.error = null // Clear error if valid
+            }
+        }
+
+        binding.etUserName.doAfterTextChanged {
+            if (it.isNullOrBlank()) {
+                binding.tilUserName.error = "Enter username."
+            }else {
+                binding.tilUserName.error = null // Clear error if valid
+            }
+        }
+
+        binding.etPassword.doAfterTextChanged {
+            if (it.isNullOrBlank()) {
+                binding.tilPassword.error = "This is required field."
+            } else if (it.toString().trim().length <= 6) {
+                binding.tilPassword.error = "Password should be at least 8 characters long."
+            } else if (!isStrongPassword(it.toString())) {
+                binding.tilPassword.error = "Password should contain A-Z, a-z, 0-9,\nSpecial characters (e.g., !, @, #, \$, %, ^, &, *, etc.)"
+            } else {
+                binding.tilPassword.error = null // Clear error if valid
+            }
+        }
+
+        binding.etConfirmPassword.doAfterTextChanged {
+            if (it.isNullOrBlank()) {
+                binding.tilConfirmPassword.error = "This is required field."
+            } else if (it.toString() != binding.etPassword.text.toString()) {
+                binding.tilConfirmPassword.error = "Password does not match."
+            } else {
+                binding.tilConfirmPassword.error = null // Clear error if valid
+            }
+        }
+    }
+
 
     private fun onClickEvents(){
 
@@ -64,6 +110,8 @@ class RegisterFragment : Fragment() {
         binding.mbRegister.setOnClickListener {
             if (checkAllField()){
 
+                binding.mbRegister.text = null
+                binding.progressLoad.isVisible = true
                 email = binding.etEmail.text.toString()
                 userName = binding.etUserName.text.toString()
                 password = binding.etConfirmPassword.text.toString()
@@ -78,6 +126,8 @@ class RegisterFragment : Fragment() {
                         }
                     }
                     .addOnFailureListener {
+                        binding.mbRegister.text = "Register"
+                        binding.progressLoad.isVisible = false
                         Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_SHORT).show()
                     }
 
@@ -111,55 +161,81 @@ class RegisterFragment : Fragment() {
             .document(userId)
             .set(admin)
             .addOnSuccessListener { _ ->
-                requireContext().showToast("Successfully Added.")
+                binding.mbRegister.text = "Register"
+                binding.progressLoad.isVisible = false
+                requireContext().showToast("Successfully registered.")
 
                 findNavController().popBackStack()
 
             }
             .addOnFailureListener { e ->
+                binding.mbRegister.text = "Register"
+                binding.progressLoad.isVisible = false
                 requireContext().showToast(e.toString())
             }
     }
 
-    private fun checkAllField() : Boolean{
+    private fun checkAllField(): Boolean {
+        var isValid = true  // Assume all fields are valid initially
 
-        if (binding.etEmail.text.toString().isEmpty()){
+        if (binding.etEmail.text.toString().isEmpty()) {
             binding.tilEmail.isErrorEnabled = true
             binding.tilEmail.error = "Enter email address."
-            return false
-        }
-
-        if (!binding.etEmail.text.toString().isValidEmail()){
+            isValid = false  // Email is not valid, set isValid to false
+        } else if (!binding.etEmail.text.toString().isValidEmail()) {
             binding.tilEmail.isErrorEnabled = true
             binding.tilEmail.error = "Enter a valid email address."
-            return false
+            isValid = false  // Email is not valid, set isValid to false
+        } else {
+            binding.tilEmail.isErrorEnabled = false  // Hide error if email is valid
         }
 
-        if (binding.etPassword.text.toString().isEmpty()){
+        if (binding.etUserName.text.toString().isEmpty()) {
+            binding.tilUserName.isErrorEnabled = true
+            binding.tilUserName.error = "Enter username."
+            isValid = false  // Email is not valid, set isValid to false
+        }else {
+            binding.tilUserName.isErrorEnabled = false  // Hide error if email is valid
+        }
+
+        if (binding.etPassword.text.toString().isEmpty()) {
             binding.tilPassword.isErrorEnabled = true
-            binding.tilPassword.error = "This is require field."
-            return false
-        }
-
-        if (binding.etPassword.text.toString().trim().length <= 6){
+            binding.tilPassword.error = "This is required field."
+            isValid = false  // Password is not valid, set isValid to false
+        } else if (binding.etPassword.text.toString().trim().length <= 6) {
             binding.tilPassword.isErrorEnabled = true
-            binding.tilPassword.error = "Password should at least 8 character long."
-            return false
+            binding.tilPassword.error = "Password should be at least 8 characters long."
+            isValid = false  // Password is not valid, set isValid to false
+        } else if (!isStrongPassword(binding.etPassword.text.toString())) {
+            binding.tilPassword.isErrorEnabled = true
+            binding.tilPassword.error = "Password should contain A-Z, a-z, 0-9,\n" +
+                    "Special characters (e.g., !, @, #, \$, %, ^, &, *, etc.)"
+            isValid = false  // Password is not strong, set isValid to false
+        } else {
+            binding.tilPassword.isErrorEnabled = false  // Hide error if password is valid
         }
 
-        if (binding.etConfirmPassword.text.toString().isEmpty()){
+        if (binding.etConfirmPassword.text.toString().isEmpty()) {
             binding.tilConfirmPassword.isErrorEnabled = true
-            binding.tilConfirmPassword.error = "This is require field."
-            return false
-        }
-
-        if (binding.etConfirmPassword.text.toString() != binding.etPassword.text.toString()){
+            binding.tilConfirmPassword.error = "This is required field."
+            isValid = false  // Confirm password is not valid, set isValid to false
+        } else if (binding.etConfirmPassword.text.toString() != binding.etPassword.text.toString()) {
             binding.tilConfirmPassword.isErrorEnabled = true
-            binding.tilConfirmPassword.error = "Password is not match."
-            return false
+            binding.tilConfirmPassword.error = "Password does not match."
+            isValid = false  // Confirm password is not valid, set isValid to false
+        } else {
+            binding.tilConfirmPassword.isErrorEnabled = false  // Hide error if confirm password is valid
         }
 
-        return true
+        return isValid
     }
+
+    fun isStrongPassword(password: String): Boolean {
+        val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+\$).{8,}\$".toRegex()
+        return passwordPattern.matches(password)
+    }
+
+
+
 
 }

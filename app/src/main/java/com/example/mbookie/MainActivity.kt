@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.mbookie.admin.ui.activity.AdminHomePageActivity
 import com.example.mbookie.customer.ui.activity.CustomerHomePageActivity
@@ -69,6 +70,7 @@ class MainActivity : AppCompatActivity() {
     private fun getUserRole(userId: String) {
 
         if (adminOrCustomer == "0"){
+            Log.d("JGKHKJH", "getUserRole: $adminOrCustomer")
             userTable = FireStoreTables.ADMIN
         }else{
             userTable = FireStoreTables.CUSTOMER
@@ -79,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         ref.get()
             .addOnSuccessListener {
                 showToast("Success.")
-
+                Log.d("HKJHKJ", "getUserRole: ${it.data?.get("isAdmin").toString()}")
                 if (it != null){
                     val isAdmin = it.data?.get("isAdmin").toString()
 
