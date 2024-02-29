@@ -20,8 +20,10 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.mbookie.R
+import com.example.mbookie.admin.ui.adapter.GenreAdapter
 import com.example.mbookie.admin.ui.adapter.MovieCategoryAdapter
 import com.example.mbookie.data.model.Genre
 import com.example.mbookie.data.model.MovieDetail
@@ -80,11 +82,10 @@ class AddMovieFragment : Fragment() {
         super.onResume()
 
         if (movieViewModel.selectedGenreList.isNotEmpty()) {
-
+            Log.d("JHKJH", "onResume: ${movieViewModel.selectedGenreList}")
             val selectedGenre = StringBuilder()
-
+            selectedGenreIdList.clear()
             for ((index, genre) in movieViewModel.selectedGenreList.withIndex()) {
-                selectedGenreIdList.clear()
                 selectedGenreIdList.add(genre.id.toString())
                 selectedGenre.append(genre.genre)
                 if (index < movieViewModel.selectedGenreList.size - 1) {
@@ -179,6 +180,7 @@ class AddMovieFragment : Fragment() {
 
         selectedGenreIdList.clear()
         selectedGenreIdList.addAll(movieViewModel.editMovieDetail.mGenreIdList!!)
+//        getGenreListWithSelectedIdList()
         binding.etSelectGenre.setText(movieViewModel.editMovieDetail.mGenre)
 
         binding.etLanguage.setText(movieViewModel.editMovieDetail.mLanguage)
@@ -212,6 +214,32 @@ class AddMovieFragment : Fragment() {
         oldReleaseDate = movieViewModel.editMovieDetail.mReleaseDate.toString()
 
 
+    }
+
+    private fun getGenreListWithSelectedIdList() {
+        movieViewModel.getGenreListWithIdLst(movieViewModel.editMovieDetail.mGenreIdList!!)
+        movieViewModel.genreListWithIdLst.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Failure -> {
+                    loadingDialog.hideDialog()
+                    Toast.makeText(requireContext(), state.error.toString(), Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                UiState.Loading -> {
+                    loadingDialog.showDialog()
+                }
+
+                is UiState.Success -> {
+                    loadingDialog.hideDialog()
+
+                    movieViewModel.selectedGenreList.clear()
+                    movieViewModel.selectedGenreList.addAll(state.data as ArrayList<Genre>)
+                    Log.d("KJHKH", "getGenreListWithSelectedIdList: ${movieViewModel.selectedGenreList}")
+
+                }
+            }
+        }
     }
 
     private fun onBackPressed() {

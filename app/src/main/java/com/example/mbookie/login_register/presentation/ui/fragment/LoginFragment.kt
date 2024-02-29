@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
@@ -17,8 +18,12 @@ import com.example.mbookie.databinding.FragmentLoginBinding
 import com.example.mbookie.util.FireStoreTables
 import com.example.mbookie.util.isValidEmail
 import com.example.mbookie.util.showToast
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.firestore
 
 
@@ -73,8 +78,8 @@ class LoginFragment : Fragment() {
             val password = binding.etPassword.text.toString()
             if (checkAllField()) {
 
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                    if (it.isSuccessful) {
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {task->
+                    if (task.isSuccessful) {
                         //login success
                         val userId = auth.currentUser?.uid.toString()
 
@@ -82,9 +87,17 @@ class LoginFragment : Fragment() {
 
                     } else {
                         //login failed
+                        val exception = task.exception
+                        if (exception is FirebaseAuthInvalidUserException) {
+                            requireActivity().showToast("Email is not registered.")
+                        } else if (exception is FirebaseAuthInvalidCredentialsException) {
+                            requireActivity().showToast("Incorrect email or password.")
+                        } else {
+                            requireActivity().showToast("Authentication failed")
+                        }
+
                         binding.mbLogin.text = "Login"
                         binding.progressLoad.isVisible = false
-                        requireContext().showToast(it.exception.toString())
                     }
                 }
 
@@ -165,7 +178,7 @@ class LoginFragment : Fragment() {
         } else {
             binding.tilPassword.isErrorEnabled = false  // Hide error if password is valid
         }
-
+        binding.mbLogin.checkRequirement()
         return true
     }
 
@@ -178,6 +191,8 @@ class LoginFragment : Fragment() {
             } else {
                 binding.tilEmail.error = null // Clear error if valid
             }
+
+            binding.mbLogin.checkRequirement()
         }
 
         binding.etPassword.doAfterTextChanged {
@@ -190,11 +205,16 @@ class LoginFragment : Fragment() {
             } else {
                 binding.tilPassword.error = null // Clear error if valid
             }
+            binding.mbLogin.checkRequirement()
         }
 
     }
 
-    fun isStrongPassword(password: String): Boolean {
+    private fun MaterialButton.checkRequirement(){
+        isEnabled = binding.tilEmail.error.isNullOrEmpty() && binding.tilPassword.error.isNullOrEmpty()
+    }
+
+    private fun isStrongPassword(password: String): Boolean {
         val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+\$).{8,}\$".toRegex()
         return passwordPattern.matches(password)
     }

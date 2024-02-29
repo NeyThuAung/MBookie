@@ -63,6 +63,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.OnItemClickListener,Delet
         activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.isVisible = true
 
         binding.floatingActionAddMovie.setOnClickListener {
+            movieViewModel.movieId = ""
             findNavController().navigate(R.id.action_movieListFragment_to_addMovieFragment)
         }
 

@@ -108,6 +108,9 @@ class MovieUseCase @Inject constructor(
             result(uiState)
         }
     }
+    fun getGenreListWithSelectedIdLst(selectedGenreIdLst: ArrayList<String>,result: (UiState<List<Genre>>) -> Unit) {
+        movieRepository.getGenreListWithIdList(selectedGenreIdLst,result)
+    }
 
 
 }

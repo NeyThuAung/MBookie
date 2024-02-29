@@ -230,4 +230,15 @@ class MovieViewModel @Inject constructor(
             _deleteMovie.value = it
         }
     }
+
+    private val _genreListWithIdLst = MutableLiveData<UiState<List<Genre>>>()
+    val genreListWithIdLst : LiveData<UiState<List<Genre>>>
+        get() = _genreListWithIdLst
+
+    fun getGenreListWithIdLst(selectedGenreIdLst: ArrayList<String>){
+        _genreListWithIdLst.value = UiState.Loading
+        movieUseCase.getGenreListWithSelectedIdLst(selectedGenreIdLst) {
+            _genreListWithIdLst.value = it
+        }
+    }
 }

@@ -611,6 +611,32 @@ class MovieRepositoryImpl(
             }
     }
 
+    override fun getGenreListWithIdList(
+        selectedGenreIdLst: ArrayList<String>,
+        result: (UiState<List<Genre>>) -> Unit
+    ) {
+        database.collection(FireStoreTables.GENRE).whereIn("id",selectedGenreIdLst)
+            .get()
+            .addOnSuccessListener {
+                val genreList = arrayListOf<Genre>()
+                for (document in it) {
+                    val genre = document.toObject(Genre::class.java)
+                    genreList.add(genre)
+
+                }
+                result.invoke(
+                    UiState.Success(genreList)
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage!!
+                    )
+                )
+            }
+    }
+
     private fun deleteMovieDocument(movieId: String, result: (UiState<String>) -> Unit) {
         val document = database.collection(FireStoreTables.MOVIE).document(movieId)
         document

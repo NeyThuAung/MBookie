@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity() {
     private fun getUserRole(userId: String) {
 
         if (adminOrCustomer == "0"){
-            Log.d("JGKHKJH", "getUserRole: $adminOrCustomer")
             userTable = FireStoreTables.ADMIN
         }else{
             userTable = FireStoreTables.CUSTOMER
@@ -81,7 +80,6 @@ class MainActivity : AppCompatActivity() {
         ref.get()
             .addOnSuccessListener {
                 showToast("Success.")
-                Log.d("HKJHKJ", "getUserRole: ${it.data?.get("isAdmin").toString()}")
                 if (it != null){
                     val isAdmin = it.data?.get("isAdmin").toString()
 
