@@ -485,6 +485,7 @@ class MovieRepositoryImpl(
                     for (document in smcQuerySnapshot) {
                         val showMovieCinema = document.toObject(ShowMovieCinema::class.java)
                         showIdList.add(showMovieCinema.showId.toString())
+                        batch.delete(document.reference)
                     }
 
                     if (showIdList.isNotEmpty()) {
@@ -497,25 +498,17 @@ class MovieRepositoryImpl(
                                 showQuerySnapShot.documents.forEach { document ->
                                     batch.delete(document.reference)
                                 }
+                                batch.commit()
+                                    .addOnSuccessListener {
+
+                                    }.addOnFailureListener { exception ->
+                                        result.invoke(
+                                            UiState.Failure(exception.localizedMessage)
+                                        )
+                                    }
 
                             }
                     }
-
-                    smcQuerySnapshot.documents.forEach { smcDocument ->
-                        batch.delete(smcDocument.reference)
-                    }
-
-                    batch.commit().addOnSuccessListener {
-//                        result.invoke(
-//                            UiState.Success("Cinema '$cinemaId' has been successfully deleted.")
-//                        )
-
-                    }.addOnFailureListener { exception ->
-                        result.invoke(
-                            UiState.Failure(exception.localizedMessage)
-                        )
-                    }
-
 
                 }
 
@@ -523,6 +516,7 @@ class MovieRepositoryImpl(
                 document
                     .delete()
                     .addOnSuccessListener {
+                        deleteSeat(cinemaId,result)
                         result.invoke(
                             UiState.Success("Cinema '$cinemaId' has been successfully deleted.")
                         )

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ import com.example.mbookie.util.LoadingDialog
 import com.example.mbookie.util.UiState
 import com.example.mbookie.util.showToast
 import com.example.mbookie.viewmodel.MovieViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
 
@@ -47,6 +49,9 @@ class CreateGenreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //hide bottom navigation form Home Page Activity
+        activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.isVisible = false
 
         if (movieViewModel.genreId.isNotEmpty()) {
             setEditLayout()
@@ -92,6 +97,7 @@ class CreateGenreFragment : Fragment() {
                 is UiState.Success -> {
                     loadingDialog.hideDialog()
                     requireActivity().showToast(state.data)
+                    findNavController().popBackStack()
                 }
             }
         }
@@ -120,6 +126,7 @@ class CreateGenreFragment : Fragment() {
                 is UiState.Success -> {
                     loadingDialog.hideDialog()
                     requireActivity().showToast(state.data)
+                    findNavController().popBackStack()
                 }
             }
         }

@@ -71,13 +71,11 @@ class LoginFragment : Fragment() {
 
         binding.mbLogin.setOnClickListener {
 
-            binding.mbLogin.text = null
-            binding.progressLoad.isVisible = true
-
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
             if (checkAllField()) {
-
+                binding.mbLogin.text = null
+                binding.progressLoad.isVisible = true
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {task->
                     if (task.isSuccessful) {
                         //login success
@@ -179,7 +177,7 @@ class LoginFragment : Fragment() {
             binding.tilPassword.isErrorEnabled = false  // Hide error if password is valid
         }
         binding.mbLogin.checkRequirement()
-        return true
+        return isValid
     }
 
     private fun setUpTextChangeListeners() {

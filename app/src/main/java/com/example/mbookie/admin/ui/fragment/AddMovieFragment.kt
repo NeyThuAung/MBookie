@@ -1,6 +1,7 @@
 package com.example.mbookie.admin.ui.fragment
 
 import android.app.Activity
+import android.app.TimePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -36,6 +37,7 @@ import com.example.mbookie.util.showToast
 import com.example.mbookie.viewmodel.MovieViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
@@ -145,9 +147,6 @@ class AddMovieFragment : Fragment() {
             }
         })
 
-        binding.etDuration.doAfterTextChanged {
-            binding.tvSave.checkRequirement()
-        }
 
         binding.etLanguage.doAfterTextChanged {
             binding.tvSave.checkRequirement()
@@ -276,6 +275,30 @@ class AddMovieFragment : Fragment() {
 
             binding.tvSave.checkRequirement()
         }
+
+        binding.etDuration.doAfterTextChanged {
+            if (!it.toString().isNullOrEmpty()) {
+
+                binding.tilDuration.endIconDrawable =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_clear_text)
+
+                binding.tilDuration.setEndIconOnClickListener {
+                    binding.etDuration.text?.clear()
+                }
+
+            } else {
+
+                binding.tilDuration.endIconDrawable =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_duration_clock)
+
+                binding.tilDuration.setEndIconOnClickListener {
+                    openTimePicker()
+                }
+
+            }
+
+            binding.tvSave.checkRequirement()
+        }
     }
 
     private fun bindMovieCategoryDropDown(movieCategoryList: ArrayList<MovieCategoryData>) {
@@ -324,6 +347,10 @@ class AddMovieFragment : Fragment() {
 
         binding.etSelectGenre.setOnClickListener {
             findNavController().navigate(R.id.action_addMovieFragment_to_selectGenreFragment)
+        }
+
+        binding.etDuration.setOnClickListener {
+            openTimePicker()
         }
 
         binding.etReleaseDate.setOnClickListener {
@@ -400,6 +427,28 @@ class AddMovieFragment : Fragment() {
 
 
         }
+
+    }
+
+    private fun openTimePicker() {
+        val calendar = Calendar.getInstance()
+
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            { _, hourOfDay, minute ->
+                val durationString = if (minute == 0) {
+                    "$hourOfDay hr"
+                } else {
+                    String.format("%d hr %2d min", hourOfDay, minute)
+                }
+                binding.etDuration.setText(durationString)
+            },
+            calendar.get(Calendar.HOUR_OF_DAY),
+            calendar.get(Calendar.MINUTE),
+            true
+        )
+
+        timePickerDialog.show()
 
     }
 
@@ -486,9 +535,11 @@ class AddMovieFragment : Fragment() {
 
     private fun openDatePicker() {
         val c = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val constraintsBuilder = CalendarConstraints.Builder()
+        constraintsBuilder.setStart(c.timeInMillis)
         val datePickerStart =
             MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select Start Date")
+                .setTitleText("Select Release Date")
                 .setSelection(c.timeInMillis)
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .build()
