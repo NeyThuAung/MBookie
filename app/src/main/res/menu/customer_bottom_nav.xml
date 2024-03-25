@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/customerHomeFragment"
+        android:icon="@drawable/home_menu_selector"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/customerBookingListFragment"
+        android:icon="@drawable/booking_menu_selector"
+        android:title="@string/booking" />
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/profile_menu_selector"
+        android:title="@string/profile" />
+
+</menu>

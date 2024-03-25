@@ -15,6 +15,7 @@ import com.example.mbookie.R
 import com.example.mbookie.admin.ui.activity.AdminHomePageActivity
 import com.example.mbookie.customer.ui.activity.CustomerHomePageActivity
 import com.example.mbookie.databinding.FragmentLoginBinding
+import com.example.mbookie.util.AppSharedPreference
 import com.example.mbookie.util.FireStoreTables
 import com.example.mbookie.util.isValidEmail
 import com.example.mbookie.util.showToast
@@ -34,8 +35,10 @@ class LoginFragment : Fragment() {
 
     private val db = Firebase.firestore
 
-    private var adminOrCustomer = "0" //0 is admin //1 is customer
-    private lateinit var userTable : String
+    private val appSharedPreference : AppSharedPreference by lazy {
+        AppSharedPreference(requireContext())
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -110,22 +113,18 @@ class LoginFragment : Fragment() {
 
     private fun getUserRole(userId: String) {
 
-        if (adminOrCustomer == "0" || binding.etEmail.text.toString().contains("admin")){
-            userTable = FireStoreTables.ADMIN
-        }else{
-            userTable = FireStoreTables.CUSTOMER
-        }
-
-        val ref = db.collection(userTable).document(userId)
+        val ref = db.collection(FireStoreTables.USER).document(userId)
 
         ref.get()
             .addOnSuccessListener {
                 binding.mbLogin.text = "Login"
                 binding.progressLoad.isVisible = false
                 if (it != null){
-                    val isAdmin = it.data?.get("isAdmin").toString()
+                    val userType = it.data?.get("userType").toString()
+                    val userName = it.data?.get("userName").toString()
+                    appSharedPreference.save("userName",userName)
 
-                    if (isAdmin.toInt() == 0){
+                    if (userType.lowercase() == "admin" ){
                         val intent = Intent(requireContext(), AdminHomePageActivity::class.java)
                         startActivity(intent)
                     }else{
@@ -183,7 +182,7 @@ class LoginFragment : Fragment() {
     private fun setUpTextChangeListeners() {
         binding.etEmail.doAfterTextChanged {
             if (it.isNullOrBlank()) {
-                binding.tilEmail.error = "Enter email address."
+                binding.tilEmail.error = "This is required field."
             } else if (!it.toString().isValidEmail()) {
                 binding.tilEmail.error = "Enter a valid email address."
             } else {

@@ -31,9 +31,6 @@ class RegisterFragment : Fragment() {
     private lateinit var userName : String
     private lateinit var password : String
 
-    private var adminOrCustomer = "0" //0 is admin //1 is customer
-    private lateinit var userTable : String
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,6 +78,7 @@ class RegisterFragment : Fragment() {
             } else if (!isStrongPassword(it.toString())) {
                 binding.tilPassword.error = "Password should contain A-Z, a-z, 0-9,\nSpecial characters (e.g., !, @, #, \$, %, ^, &, *, etc.)"
             } else {
+                binding.tilPassword.isErrorEnabled = false
                 binding.tilPassword.error = null // Clear error if valid
             }
         }
@@ -91,6 +89,7 @@ class RegisterFragment : Fragment() {
             } else if (it.toString() != binding.etPassword.text.toString()) {
                 binding.tilConfirmPassword.error = "Password does not match."
             } else {
+                binding.tilConfirmPassword.isErrorEnabled = false
                 binding.tilConfirmPassword.error = null // Clear error if valid
             }
         }
@@ -139,12 +138,6 @@ class RegisterFragment : Fragment() {
     //save user info to database table
     private fun  saveUserInfo(userId : String) {
 
-        if (adminOrCustomer == "0"){
-            userTable = FireStoreTables.ADMIN
-        }else{
-            userTable = FireStoreTables.CUSTOMER
-        }
-
         val admin = hashMapOf(
             "userId" to userId,
             "email" to email,
@@ -154,10 +147,10 @@ class RegisterFragment : Fragment() {
             "birthday" to "",
             "gender" to "",
             "profileUrl" to "",
-            "isAdmin" to adminOrCustomer //0 is admin // 1 is customer
+            "userType" to "customer"
         )
 
-        db.collection(userTable)
+        db.collection(FireStoreTables.USER)
             .document(userId)
             .set(admin)
             .addOnSuccessListener { _ ->

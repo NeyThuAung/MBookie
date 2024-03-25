@@ -631,6 +631,32 @@ class MovieRepositoryImpl(
             }
     }
 
+    override fun getMovieListWithCategory(
+        mCategory: Int,
+        result: (UiState<List<MovieDetail>>) -> Unit
+    ) {
+        database.collection(FireStoreTables.MOVIE)
+            .whereEqualTo("mcategoryId",mCategory)
+            .get()
+            .addOnSuccessListener {
+                val movieList = arrayListOf<MovieDetail>()
+                for (document in it) {
+                    val movie = document.toObject(MovieDetail::class.java)
+                    movieList.add(movie)
+                }
+                result.invoke(
+                    UiState.Success(movieList)
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage!!
+                    )
+                )
+            }
+    }
+
     private fun deleteMovieDocument(movieId: String, result: (UiState<String>) -> Unit) {
         val document = database.collection(FireStoreTables.MOVIE).document(movieId)
         document

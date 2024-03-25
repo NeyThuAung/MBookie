@@ -241,4 +241,14 @@ class MovieViewModel @Inject constructor(
             _genreListWithIdLst.value = it
         }
     }
+    private val _movieListWithCategory = MutableLiveData<UiState<List<MovieDetail>>>()
+    val movieListWithCategory : LiveData<UiState<List<MovieDetail>>>
+        get() = _movieListWithCategory
+
+    fun getMovieListWithCategory(categoryId : Int){
+        _movieListWithCategory.value = UiState.Loading
+        movieUseCase.getMovieListWithCategory(categoryId) {
+            _movieListWithCategory.value = it
+        }
+    }
 }

@@ -61,4 +61,8 @@
     <string name="add_cinema">Add cinema</string>
     <string name="add_new_showtime">Add new showtime</string>
     <string name="done">Done</string>
+    <string name="welcome">Welcome</string>
+    <string name="hi_user">Hi, %1$s</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="see_all">See all</string>
 </resources>

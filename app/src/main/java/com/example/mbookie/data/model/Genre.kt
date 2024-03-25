@@ -10,7 +10,7 @@ data class MovieDetail(
     var mId : String ?="",
     var mPosterImg : String ?="",
     var mTitle : String ?="",
-    var mCategoryId : Int ?=0,
+    var mCategoryId : String ?="",
     var mGenreIdList : ArrayList<String> ?= arrayListOf(),
     var mGenre : String ?="",
     var mDuration : String ?="",
@@ -19,6 +19,12 @@ data class MovieDetail(
     var mTrailerLink : String ?="",
     var mDescription : String ?="",
     var mLanguage : String ?=""
+)
+
+data class MovieListForCustomer(
+    var id : String ?="",
+    var mCategory : String ?="",
+    var movieList : ArrayList<MovieDetail> ?= arrayListOf()
 )
 
 data class MovieShowCinema(

@@ -55,7 +55,7 @@ class AddMovieFragment : Fragment() {
 
     private val movieViewModel: MovieViewModel by activityViewModels()
     private var selectedPos = 1
-    private var selectedCategoryId = -1
+    private var selectedCategoryId : String = ""
     private var selectedGenreIdList: ArrayList<String> = arrayListOf()
 
     val storageRef = FirebaseStorage.getInstance()
@@ -64,7 +64,7 @@ class AddMovieFragment : Fragment() {
     private var editMoviePoster = 0 // 0 is Normal // 1 is edit
 
     private var oldMovieName = ""
-    private var oldMovieCategoryId = -1
+    private var oldMovieCategoryId : String= ""
     private var oldSelectedGenre = ""
     private var oldSelectedGenreIdList = arrayListOf<String>()
     private var oldLanguage = ""
@@ -175,7 +175,7 @@ class AddMovieFragment : Fragment() {
         binding.etMovieTitle.setText(movieViewModel.editMovieDetail.mTitle)
 
         selectedCategoryId = movieViewModel.editMovieDetail.mCategoryId!!
-        binding.actvMovieCategory.setText(movieCategoryList[selectedCategoryId].movieCategoryName)
+        binding.actvMovieCategory.setText(selectedCategoryId)
 
         selectedGenreIdList.clear()
         selectedGenreIdList.addAll(movieViewModel.editMovieDetail.mGenreIdList!!)
@@ -316,7 +316,7 @@ class AddMovieFragment : Fragment() {
             selectedPos = i
             if (movieCategoryList[i].id != -1) {
 //                productDetailViewModel.productTypeId = lst[i].id
-                selectedCategoryId = movieCategoryList[i].id
+                selectedCategoryId = movieCategoryList[i].movieCategoryName
             } else {
 //                productDetailViewModel.productTypeId = 0
             }
@@ -577,7 +577,7 @@ class AddMovieFragment : Fragment() {
 
     private fun TextView.checkRequirement() {
         isEnabled = if (movieViewModel.movieId.isNotEmpty()) {
-            binding.etMovieTitle.text.toString().trim().isNotEmpty() && selectedCategoryId != -1 &&
+            binding.etMovieTitle.text.toString().trim().isNotEmpty() && selectedCategoryId != "" &&
                     binding.etSelectGenre.text.toString().trim()
                         .isNotEmpty() && binding.etDuration.text.toString().trim().isNotEmpty() &&
                     binding.etReleaseDate.text.toString().trim()
@@ -588,7 +588,7 @@ class AddMovieFragment : Fragment() {
                             (binding.etCensorship.text.toString() != oldCensorShip) || (binding.etTrailerLink.text.toString() != oldTrailerLint) ||
                             (binding.etDescription.text.toString() != oldDescription))
         } else {
-            binding.etMovieTitle.text.toString().trim().isNotEmpty() && selectedCategoryId != -1 &&
+            binding.etMovieTitle.text.toString().trim().isNotEmpty() && selectedCategoryId != "" &&
                     binding.etSelectGenre.text.toString().trim()
                         .isNotEmpty() && binding.etDuration.text.toString().trim().isNotEmpty() &&
                     binding.etReleaseDate.text.toString().trim()

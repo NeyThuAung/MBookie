@@ -11,6 +11,7 @@ import com.example.mbookie.admin.ui.activity.AdminHomePageActivity
 import com.example.mbookie.customer.ui.activity.CustomerHomePageActivity
 import com.example.mbookie.databinding.ActivityMainBinding
 import com.example.mbookie.login_register.presentation.ui.activity.LoginRegisterActivity
+import com.example.mbookie.util.AppSharedPreference
 import com.example.mbookie.util.FireStoreTables
 import com.example.mbookie.util.showToast
 import com.google.firebase.Firebase
@@ -27,8 +28,9 @@ class MainActivity : AppCompatActivity() {
 
     private val db = Firebase.firestore
 
-    private var adminOrCustomer = "0" //0 is admin //1 is customer
-    private lateinit var userTable : String
+    private val appSharedPreference : AppSharedPreference by lazy {
+        AppSharedPreference(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,21 +71,17 @@ class MainActivity : AppCompatActivity() {
     // get user role to specify admin or customer
     private fun getUserRole(userId: String) {
 
-        if (adminOrCustomer == "0"){
-            userTable = FireStoreTables.ADMIN
-        }else{
-            userTable = FireStoreTables.CUSTOMER
-        }
-
-        val ref = db.collection(userTable).document(userId)
+        val ref = db.collection(FireStoreTables.USER).document(userId)
 
         ref.get()
             .addOnSuccessListener {
                 showToast("Success.")
                 if (it != null){
-                    val isAdmin = it.data?.get("isAdmin").toString()
+                    val userType = it.data?.get("userType").toString()
+                    val userName = it.data?.get("userName").toString()
+                    appSharedPreference.save("userName",userName)
 
-                    if (isAdmin.toInt() == 0){
+                    if (userType.lowercase() == "admin"){
                         val intent = Intent(this, AdminHomePageActivity::class.java)
                         startActivity(intent)
                     }else{

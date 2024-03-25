@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/customer_nav_home"
+    app:startDestination="@id/customerHomeFragment">
+
+    <fragment
+        android:id="@+id/customerHomeFragment"
+        android:name="com.example.mbookie.customer.ui.fragment.CustomerHomeFragment"
+        android:label="fragment_customer_home"
+        tools:layout="@layout/fragment_customer_home" >
+        <action
+            android:id="@+id/action_customerHomeFragment_to_seeAllMovieFragment"
+            app:destination="@id/seeAllMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerBookingListFragment"
+        android:name="com.example.mbookie.customer.ui.fragment.CustomerBookingListFragment"
+        android:label="fragment_customer_booking_list"
+        tools:layout="@layout/fragment_customer_booking_list" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.mbookie.admin.ui.fragment.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/seeAllMovieFragment"
+        android:name="com.example.mbookie.customer.ui.fragment.SeeAllMovieFragment"
+        android:label="fragment_see_all_movie"
+        tools:layout="@layout/fragment_see_all_movie" />
+</navigation>

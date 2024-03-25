@@ -39,4 +39,7 @@ interface MovieRepository {
     fun   deleteMovie(movieId : String, result : (UiState<String>) -> Unit)
 
     fun getGenreListWithIdList(selectedGenreIdLst : ArrayList<String>,result : (UiState<List<Genre>>) -> Unit)
+
+    fun getMovieListWithCategory(mCategory : Int, result: (UiState<List<MovieDetail>>) -> Unit)
+
 }

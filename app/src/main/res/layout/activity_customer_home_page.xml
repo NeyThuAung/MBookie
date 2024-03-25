@@ -4,18 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".customer.ui.activity.CustomerHomePageActivity">
+    tools:context=".admin.ui.activity.AdminHomePageActivity">
 
-    <TextView
-        android:id="@+id/tvSignOut"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent" />
+    <fragment
+        android:id="@+id/fragment_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Customer Page\nSign Out"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/customer_nav_home" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_gravity="bottom"
+        android:fitsSystemWindows="true"
+        app:itemActiveIndicatorStyle="@style/ActiveNavigatorStyle"
+        app:itemIconSize="18dp"
+        app:itemTextColor="@color/tv_nav_text_select_unselect"
+        app:backgroundTint="@color/primary_black"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:itemBackground="@drawable/nevigation_tab_background"
+        app:itemTextAppearanceActive="@style/BottomNavigationTextActive"
+        app:itemTextAppearanceInactive="@style/BottomNavigationTextInactive"
+        app:itemPaddingTop="15dp"
+        app:itemPaddingBottom="15dp"
+        app:menu="@menu/customer_bottom_nav"
+        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

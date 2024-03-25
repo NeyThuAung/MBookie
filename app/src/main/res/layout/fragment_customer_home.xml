@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    tools:context=".customer.ui.fragment.CustomerHomeFragment">
+
+    <LinearLayout
+        android:id="@+id/llTop"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="14dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="DisableBaselineAlignment,UselessParent">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvHiUser"
+                tools:text="@string/hi_user"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:fontFamily="@font/inter_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvWelcome"
+                android:text="@string/welcome"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:layout_marginTop="-4dp"
+                android:fontFamily="@font/inter_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivSearchMovie"
+                android:padding="5dp"
+                android:src="@drawable/ic_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewLine"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/llTop"
+        android:background="@color/view_line_color"
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
+        app:layout_constraintTop_toBottomOf="@id/viewLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/llNowPlaying"
+                android:layout_marginTop="14dp"
+                android:layout_marginHorizontal="14dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvNowPlaying"
+                    tools:text="@string/now_playing"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_medium"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/llSeeAllNowPlaying"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingStart="15dp"
+                    android:paddingVertical="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <TextView
+                        android:id="@+id/tvSeeAllNowPlaying"
+                        android:text="@string/see_all"
+                        android:textColor="@color/green"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/inter_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:src="@drawable/ic_forward_arrow"
+                        android:layout_marginStart="3dp"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:contentDescription="@string/app_name" />
+
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerImageSlider"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:paddingHorizontal="100dp"
+                android:minHeight="250dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recMovieCategory"
+                tools:listitem="@layout/customer_movie_category_item_card"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:paddingBottom="30dp"
+                android:orientation="vertical"
+                tools:itemCount="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
