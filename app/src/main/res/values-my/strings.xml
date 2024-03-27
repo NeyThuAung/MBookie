@@ -65,4 +65,6 @@
     <string name="hi_user">Hi, %1$s</string>
     <string name="now_playing">Now Playing</string>
     <string name="see_all">See all</string>
+    <string name="watch_trailer">Watch Trailer</string>
+    <string name="genre">Genre</string>
 </resources>

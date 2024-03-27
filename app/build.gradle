@@ -78,4 +78,7 @@ dependencies {
     implementation('com.github.bumptech.glide:okhttp3-integration:4.12.0') {
         exclude group: 'glide-parent'
     }
+
+    //read more
+    implementation "com.webtoonscorp.android:readmore-view:1.3.0"
 }

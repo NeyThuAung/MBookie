@@ -1,5 +1,6 @@
 package com.example.mbookie.data.repository
 
+import com.example.mbookie.data.model.Cinema
 import com.example.mbookie.data.model.MovieDetail
 import com.example.mbookie.util.AppSharedPreference
 import com.example.mbookie.util.UiState
@@ -12,4 +13,8 @@ interface CustomerRepository {
     fun getFirstMovieList(mCategory : String) : Flow<UiState<List<MovieDetail>>>
 
     fun getMovieListWithPagination(share : AppSharedPreference,mCategory : String) : Flow<UiState<List<MovieDetail>>>
+
+    fun getMovieDetail(movieId : String) : Flow<UiState<MovieDetail>>
+
+    fun getAvailableCinemaForMovie(movieId : String) : Flow<UiState<List<Cinema>>>
 }

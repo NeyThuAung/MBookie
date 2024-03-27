@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".customer.ui.fragment.MovieDetailFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/transparent"
+        android:elevation="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/app_name"
+            android:paddingVertical="3dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
+        app:layout_constraintTop_toBottomOf="@id/clActionBar"
+        app:layout_constraintBottom_toTopOf="@id/mbContinueToBook"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="UselessLeaf">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvMoviePoster"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="30dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivMoviePoster"
+                    android:layout_width="170dp"
+                    android:layout_height="220dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/image1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.cardview.widget.CardView>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvMovieDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="14dp"
+                android:layout_marginTop="-35dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/cvMoviePoster">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#1C1C1C"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="14dp"
+                    tools:ignore="UselessLeaf">
+
+                    <TextView
+                        android:id="@+id/tvMovieTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/inter_bold"
+                        android:maxLines="2"
+                        tools:text="Aventer: Infinity War"
+                        android:textColor="@color/white"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvMovieDateDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        tools:text="1 hr 30 min . Feb 10 2023"
+                        android:textColor="@color/text_grey_color"
+                        android:textSize="14sp" />
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvWatchTrailer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:elevation="0dp"
+                        app:cardBackgroundColor="@color/transparent"
+                        app:cardCornerRadius="5dp"
+                        app:strokeColor="@color/white"
+                        app:strokeWidth="0.5dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="5dp">
+
+                            <ImageView
+                                android:id="@+id/ivWatch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/ic_play" />
+
+
+                            <TextView
+                                android:id="@+id/tvWatchTrailer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="@string/watch_trailer"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                app:layout_constraintTop_toBottomOf="@id/cvMovieDetail"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/llMovieGenre"
+                    android:layout_marginHorizontal="14dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/tvGenreTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="@string/genre"
+                        android:textColor="@color/text_grey_color"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvGenre"
+                        android:layout_marginStart="60sp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        tools:text="Action, Adventure, Sci-fi"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCensorship"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginHorizontal="14dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/tvCensorshipTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="Censorship"
+                        android:textColor="@color/text_grey_color"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvCensorship"
+                        android:layout_marginStart="25sp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        tools:text="13+"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llLanguage"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginHorizontal="14dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/tvLanguageTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="@string/language"
+                        android:textColor="@color/text_grey_color"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvLanguage"
+                        android:layout_marginStart="35sp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        tools:text="English"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDescription"
+                    android:layout_marginHorizontal="14dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="@string/description"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/inter_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <com.webtoonscorp.android.readmore.ReadMoreTextView
+                        android:id="@+id/tvDescription"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/inter_regular"
+                        app:readMoreMaxLines="3"
+                        app:readMoreText=" More..."
+                        app:readMoreTextColor="@color/green"
+                        app:readMoreOverflow="clip"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/inter_regular"
+                        tools:text="Lorem ipsum dolor sit amet consectetur. Etiam libero lorem vulputate elit et nulla
+risus consequat. Sit dui tempus viverrLorem ipsum dolor sit amet consectetur. Etiam libero lorem vulputate elit et nulla
+risus consequat. Sit dui tempus viverr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llSelectCinema"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Select Cinema"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="14dp"
+                        android:fontFamily="@font/inter_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recSelectCinemaList"
+                        android:layout_marginTop="5dp"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/cinema_item_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbContinueToBook"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="14dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/button_enable_disable_color"
+        android:enabled="false"
+        android:fontFamily="@font/pyidaungsu_regular"
+        android:paddingVertical="14dp"
+        android:text="Continue"
+        android:textColor="@color/text_enable_disable_state_v2"
+        android:textSize="14sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,10 +14,17 @@ class CustomerViewModel @Inject constructor(
 
     var movieList : ArrayList<MovieDetail> = arrayListOf()
     var mCategory : String = ""
+    var movieId : String = ""
+    var movieTrailerLink : String =""
 
     fun getMovieListForCustomer() = customerUseCase.getMovieListForCustomer()
 
     fun getFirstMovieList(mCategory : String) = customerUseCase.getFirstMovieList(mCategory)
 
     fun getMovieListWithPagination(share : AppSharedPreference,mCategory : String) = customerUseCase.getMovieListWithPagination(share,mCategory)
+
+    fun getMovieDetail(movieId : String) = customerUseCase.getMovieDetail(movieId)
+
+    fun getAvailableCinemaForMovie(movieId : String) = customerUseCase.getAvailableCinemaForMovie(movieId)
+
 }

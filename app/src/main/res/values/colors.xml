@@ -15,4 +15,5 @@
     <color name="transparent">#00000000</color>
     <color name="view_bg">#F7F7F7</color>
     <color name="light_black">#1C1C1C</color>
+    <color name="pale_button_color">#EAF0FF</color>
 </resources>

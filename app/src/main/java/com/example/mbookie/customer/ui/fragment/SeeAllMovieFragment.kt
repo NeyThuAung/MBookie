@@ -223,7 +223,8 @@ class SeeAllMovieFragment : Fragment(), SeeAllMovieAdapter.OnOrderClickListener 
     }
 
     override fun onRootClick(movieId: String) {
-
+        customerViewModel.movieId = movieId
+        findNavController().navigate(R.id.action_seeAllMovieFragment_to_movieDetailFragment)
     }
 
 

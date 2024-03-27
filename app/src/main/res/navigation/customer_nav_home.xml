@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_customerHomeFragment_to_seeAllMovieFragment"
             app:destination="@id/seeAllMovieFragment" />
+        <action
+            android:id="@+id/action_customerHomeFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/customerBookingListFragment"
@@ -27,5 +30,23 @@
         android:id="@+id/seeAllMovieFragment"
         android:name="com.example.mbookie.customer.ui.fragment.SeeAllMovieFragment"
         android:label="fragment_see_all_movie"
-        tools:layout="@layout/fragment_see_all_movie" />
+        tools:layout="@layout/fragment_see_all_movie" >
+        <action
+            android:id="@+id/action_seeAllMovieFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.example.mbookie.customer.ui.fragment.MovieDetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" >
+        <action
+            android:id="@+id/action_movieDetailFragment_to_playTrailerFragment"
+            app:destination="@id/playTrailerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playTrailerFragment"
+        android:name="com.example.mbookie.customer.ui.fragment.PlayTrailerFragment"
+        android:label="fragment_play_trailer"
+        tools:layout="@layout/fragment_play_trailer" />
 </navigation>

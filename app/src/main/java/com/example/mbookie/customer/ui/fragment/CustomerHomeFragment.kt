@@ -239,11 +239,14 @@ class CustomerHomeFragment : Fragment(), ImageSliderAdapter.OnItemClickListener,
     }
 
     override fun onMoviePosterClick(movieId: String) {
+        customerViewModel.movieId = movieId
+        findNavController().navigate(R.id.action_customerHomeFragment_to_movieDetailFragment)
         requireActivity().showToast(movieId)
     }
 
     override fun onMovieDetailClick(movie: MovieDetail) {
-
+        customerViewModel.movieId = movie.mId.toString()
+        findNavController().navigate(R.id.action_customerHomeFragment_to_movieDetailFragment)
     }
 
     override fun onSeeAllClick(movieCategory : String) {
